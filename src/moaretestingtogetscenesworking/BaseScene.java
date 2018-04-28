@@ -5,6 +5,7 @@
  */
 package moaretestingtogetscenesworking;
 
+import java.awt.event.ActionListener;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,6 +25,7 @@ public class BaseScene {
     protected String nameOfScene;
     protected Scene thisScene;
     protected EventHandler<ActionEvent> moim;
+    protected ActionListener ads;
     
     public BaseScene(SceneManager mgr) {
         this.mgr = mgr;
