@@ -19,9 +19,9 @@ public class MoareTestingToGetScenesWorking extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Welcoming menu!");
-        
+//        
         manager = new SceneManager(primaryStage, this);
-   
+        manager.startUp();
     }
 
     /**

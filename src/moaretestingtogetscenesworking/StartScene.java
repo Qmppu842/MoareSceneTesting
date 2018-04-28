@@ -10,4 +10,11 @@ public class StartScene extends BaseScene {
         super(mgr);
     }
 
+    public StartScene(SceneManager mgr, String buttonText) {
+        super(mgr, buttonText);
+        setNameOfScene(this.getClass().toString());
+    }
+
+ 
+
 }
