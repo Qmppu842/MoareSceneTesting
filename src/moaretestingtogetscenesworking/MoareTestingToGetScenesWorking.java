@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package moaretestingtogetscenesworking;
 
 import javafx.application.Application;
@@ -18,27 +13,15 @@ import javafx.stage.Stage;
  * @author Qmppu842
  */
 public class MoareTestingToGetScenesWorking extends Application {
-    
+
+    private SceneManager manager;
+
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        primaryStage.setTitle("Welcoming menu!");
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        manager = new SceneManager(primaryStage, this);
+   
     }
 
     /**
@@ -47,5 +30,24 @@ public class MoareTestingToGetScenesWorking extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
+
+//        Button btn = new Button();
+//        btn.setText("Say 'Hello World'");
+//        btn.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//                System.out.println("Hello World!");
+//            }
+//        });
+//
+//        StackPane root = new StackPane();
+//        root.getChildren().add(btn);
+//
+//        Scene scene = new Scene(root, 300, 250);
+//
+//        primaryStage.setTitle("Hello World!");
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
