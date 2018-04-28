@@ -14,11 +14,32 @@ public class SceneManager {
     private Application app;
     private StartScene startScene;
     private FastTableScene secondScene;
+    private SlowTableScene thirdScene;
 
     public SceneManager(Stage primeStage, Application app) {
         this.primeStage = primeStage;
         this.app = app;
         init();
+    }
+
+    public void setScene(int tokako) {
+        if (tokako == 2) {
+            primeStage.setScene(getSecondScene());
+        } else if (tokako == 1) {
+            primeStage.setScene(getStartScene());
+        } 
+        switch (tokako){
+        case 1: 
+            primeStage.setScene(getStartScene());
+            break;
+        case 2:
+            primeStage.setScene(getSecondScene());
+            break;
+        case 3:
+            primeStage.setScene(getSlowScene());
+        
+        }
+
     }
 
     public void startUp() {
@@ -29,6 +50,7 @@ public class SceneManager {
     public void init() {
         startScene = new StartScene(this, "Start here!");
         secondScene = new FastTableScene(this, "FastOne");
+        thirdScene = new SlowTableScene(this, "MADLAD!");
     }
 
     public Scene getStartScene() {
@@ -37,6 +59,10 @@ public class SceneManager {
 
     public Scene getSecondScene() {
         return secondScene.getScene();
+    }
+    
+        public Scene getSlowScene() {
+        return thirdScene.getScene();
     }
 
 }
