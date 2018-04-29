@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 
 /**
  *
@@ -53,12 +54,8 @@ public class SlowTableScene extends BaseScene {
     }
 
     private void drawRoute() {
-//        Canvas wall = new Canvas(1000, 1000);
-//        GraphicsContext piirturi = wall.getGraphicsContext2D();
         gc.clearRect(0, 0, wall.getWidth(), wall.getHeight());
-//        ColorPicker coloer = new ColorPicker();
         Paint p;
-// = new Color(1, 0, 0, 0.5);
         Paint road = new Color(0.5, 0, 0.5, 0.7);
         Paint woods = new Color(0, 1, 0, 0);
         boolean[][] route = logic.getSlowTable();
@@ -73,6 +70,10 @@ public class SlowTableScene extends BaseScene {
                 gc.fillRect(1 * i, 1 * j, 1, 1);
             }
         }
+//        gc.fillRect(10, 10, 150, 50);
+//        Line aa = new Line(100, 100, 500, 500);
+//        gc.lineTo(100, 100);
+//        gc.strokeLine(0, 0, 0, 0);
     }
 
 }

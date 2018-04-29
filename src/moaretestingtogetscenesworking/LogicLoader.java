@@ -5,6 +5,8 @@
  */
 package moaretestingtogetscenesworking;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -20,15 +22,26 @@ public class LogicLoader {
     private boolean[][] fastTable;
     private boolean[][] slowTable;
     private Random fuusio;
+//    private ArrayList<Point> polku;
+    private StartEndPointArrayList polku;
 
     public LogicLoader() {
         fuusio = new Random();
         fastTable = new boolean[90][90];
         slowTable = new boolean[1500][900];
+        polku = new StartEndPointArrayList(new Point(90, 0), new Point(1500, 900));
+
     }
 
     private boolean generateTile() {
         return fuusio.nextBoolean();
+    }
+
+    public void makeNewNonTable() {
+        polku.generateNewRoute();
+    }
+    public ArrayList<Point> getNonTableRoute(){
+        return polku.getRoute();
     }
 
     public void makeNewFast() {
@@ -55,6 +68,4 @@ public class LogicLoader {
         return slowTable;
     }
 
-    
-    
 }
