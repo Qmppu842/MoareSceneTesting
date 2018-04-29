@@ -70,10 +70,6 @@ public class SlowTableScene extends BaseScene {
                 gc.fillRect(1 * i, 1 * j, 1, 1);
             }
         }
-//        gc.fillRect(10, 10, 150, 50);
-//        Line aa = new Line(100, 100, 500, 500);
-//        gc.lineTo(100, 100);
-//        gc.strokeLine(0, 0, 0, 0);
     }
 
 }

@@ -66,7 +66,6 @@ public abstract class BaseScene {
         nameOfScene = name;
     }
 
-//       @Override
     protected Button backButton() {
         EventHandler<ActionEvent> backAction = new EventHandler<ActionEvent>() {
             @Override

@@ -58,26 +58,14 @@ public class NonTableScene extends BaseScene {
     private void drawRoute() {
         gc.clearRect(0, 0, wall.getWidth(), wall.getHeight());
         Paint p;
+        Paint woods = new Color(0, 1, 0, 0.2);
+        gc.setFill(woods);
+        gc.fillRect(0, 0, 1500, 900);
         Paint road = new Color(0.5, 0, 0.5, 0.7);
         gc.setStroke(road);
         ArrayList<Point> polku = logic.getNonTableRoute();
         for (int i = 1; i < polku.size(); i++) {
             gc.strokeLine(polku.get(i-1).x, polku.get(i-1).y, polku.get(i).x, polku.get(i).y);
         }
-        Paint woods = new Color(0, 1, 0, 0);
-        
-        
-//        boolean[][] route = logic.getSlowTable();
-//        for (int i = 0; i < route.length; i++) {
-//            for (int j = 0; j < route[i].length; j++) {
-//                if (route[i][j]) {
-//                    p = road;
-//                } else {
-//                    p = woods;
-//                }
-//                gc.setFill(p);
-//                gc.fillRect(1 * i, 1 * j, 1, 1);
-//            }
-//        }
     }
 }

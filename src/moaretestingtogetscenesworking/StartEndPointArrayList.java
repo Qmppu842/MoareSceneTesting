@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package moaretestingtogetscenesworking;
 
 import java.awt.Point;
@@ -32,15 +27,7 @@ public class StartEndPointArrayList {
     public void generateNewRoute() {
         route = new ArrayList<>();
         route.add(alku);
-//        if (alku.x > loppu.x) {
-//            generateDecXRoute();
-//        } else if (alku.x < loppu.x) {
         generateIncXRoute();
-//        } else if (alku.y > loppu.y) {
-//            generateDecYRoute();
-//        } else {
-//            generateIncYRoute();
-//        }
     }
 
     private void generateIncXRoute() {
@@ -48,28 +35,18 @@ public class StartEndPointArrayList {
             Point currStep = route.get(i);
             int x = 0;
             int y = 0;
-            if (fissio.nextDouble() > 0.6) {
-                x = 10;
-                y = fissio.nextInt(25)-12;
+            if (fissio.nextDouble() > 0.7) {
+                x = fissio.nextInt(10) + 1;
+                y = fissio.nextInt(25) - 12;
             } else {
-                y = 10; // (int) alku.distance(loppu) / inHowManySteps;
-                x = fissio.nextInt(25)-12;
+                y = fissio.nextInt(10) + 1; 
+                x = fissio.nextInt(25) - 12;
             }
-            Point next = new Point((currStep.x + x)%1500, (currStep.y + y)%900);
+            Point next = new Point((currStep.x + x) % 1500, (currStep.y + y) % 900);
             route.add(next);
         }
         route.add(loppu);
     }
-
-    private void generateDecXRoute() {
-    }
-
-    private void generateIncYRoute() {
-    }
-
-    private void generateDecYRoute() {
-    }
-
     public ArrayList<Point> getRoute() {
         return route;
     }
