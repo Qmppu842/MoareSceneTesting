@@ -31,12 +31,6 @@ public class StartScene extends BaseScene {
                 mgr.setScene(2);
             }
         };
-//        ads = new ActionListener() {
-//            @Override
-//            public void actionPerformed(java.awt.event.ActionEvent ae) {
-//                System.out.println("moimmm");
-//            }
-//        };
     }
 
     private Button goToSlowTable() {

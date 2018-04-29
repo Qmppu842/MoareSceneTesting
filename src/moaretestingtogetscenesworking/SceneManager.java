@@ -24,7 +24,7 @@ public class SceneManager {
     }
 
     /**
-     *
+     *TODO refactor int to Enums that describe what they are.
      * @param tokako <br>
      * 1 = StartScene, <br>
      * 2 = FastTableScene, <br>
@@ -32,11 +32,6 @@ public class SceneManager {
      * 4 = NonTableScene
      */
     public void setScene(int tokako) {
-//        if (tokako == 2) {
-//            primeStage.setScene(getFastTableScene());
-//        } else if (tokako == 1) {
-//            primeStage.setScene(getStartScene());
-//        } 
         switch (tokako) {
             case 1:
                 primeStage.setScene(getStartScene());

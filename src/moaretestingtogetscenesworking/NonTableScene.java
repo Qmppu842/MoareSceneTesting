@@ -26,16 +26,4 @@ public class NonTableScene extends BaseScene {
             }
         };
     }
-
-//    @Override
-//    protected Button backButton() {
-//        EventHandler<ActionEvent> backAction = new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//               mgr.setScene(1);
-//            }
-//        };
-//
-//        return coreButtonMaker("Back to menu.", backAction);
-//    }
 }
