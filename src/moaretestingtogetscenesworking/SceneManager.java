@@ -13,8 +13,9 @@ public class SceneManager {
     private Stage primeStage;
     private Application app;
     private StartScene startScene;
-    private FastTableScene secondScene;
-    private SlowTableScene thirdScene;
+    private FastTableScene fastScene;
+    private SlowTableScene slowScene;
+    private NonTableScene nonScene;
 
     public SceneManager(Stage primeStage, Application app) {
         this.primeStage = primeStage;
@@ -23,21 +24,24 @@ public class SceneManager {
     }
 
     public void setScene(int tokako) {
-        if (tokako == 2) {
-            primeStage.setScene(getSecondScene());
-        } else if (tokako == 1) {
-            primeStage.setScene(getStartScene());
-        } 
-        switch (tokako){
-        case 1: 
-            primeStage.setScene(getStartScene());
-            break;
-        case 2:
-            primeStage.setScene(getSecondScene());
-            break;
-        case 3:
-            primeStage.setScene(getSlowScene());
-        
+//        if (tokako == 2) {
+//            primeStage.setScene(getFastTableScene());
+//        } else if (tokako == 1) {
+//            primeStage.setScene(getStartScene());
+//        } 
+        switch (tokako) {
+            case 1:
+                primeStage.setScene(getStartScene());
+                break;
+            case 2:
+                primeStage.setScene(getFastTableScene());
+                break;
+            case 3:
+                primeStage.setScene(getSlowTableScene());
+                break;
+            case 4:
+                primeStage.setScene(getNonTableScene());
+
         }
 
     }
@@ -49,20 +53,24 @@ public class SceneManager {
 
     public void init() {
         startScene = new StartScene(this, "Start here!");
-        secondScene = new FastTableScene(this, "FastOne");
-        thirdScene = new SlowTableScene(this, "MADLAD!");
+        fastScene = new FastTableScene(this, "FastOne");
+        slowScene = new SlowTableScene(this, "MADLAD!");
+        nonScene = new NonTableScene(this, "nonTable");
     }
 
     public Scene getStartScene() {
         return startScene.getScene();
     }
 
-    public Scene getSecondScene() {
-        return secondScene.getScene();
-    }
-    
-        public Scene getSlowScene() {
-        return thirdScene.getScene();
+    public Scene getFastTableScene() {
+        return fastScene.getScene();
     }
 
+    public Scene getSlowTableScene() {
+        return slowScene.getScene();
+    }
+
+    public Scene getNonTableScene() {
+        return nonScene.getScene();
+    }
 }

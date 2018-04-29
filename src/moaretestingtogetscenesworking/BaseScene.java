@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
  *
  * @author Qmppu842
  */
-public class BaseScene {
+public abstract class BaseScene {
 
     private SceneManager mgr;
     protected String buttonText;
@@ -26,7 +27,8 @@ public class BaseScene {
     protected Scene thisScene;
     protected EventHandler<ActionEvent> moim;
     protected ActionListener ads;
-    
+    protected BorderPane allThings;
+
     public BaseScene(SceneManager mgr) {
         this.mgr = mgr;
         buttonText = "Say 'Hello World'";
@@ -50,12 +52,20 @@ public class BaseScene {
         }
         return thisScene;
     }
-    protected void setNameOfScene(String name){
-    nameOfScene = name;
+
+    protected void setNameOfScene(String name) {
+        nameOfScene = name;
     }
 
-}
+    protected abstract Button backButton();
 
+    protected Button coreButtonMaker(String text, EventHandler<ActionEvent> action) {
+        Button btn = new Button();
+        btn.setText(text);
+        btn.setOnAction(action);
+        return btn;
+    }
+}
 
 //new EventHandler<ActionEvent>() {
 //

@@ -1,7 +1,9 @@
 package moaretestingtogetscenesworking;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -24,5 +26,19 @@ public class FastTableScene extends BaseScene {
             }
         };
     }
+
+    @Override
+    protected Button backButton() {
+        EventHandler<ActionEvent> exitter = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Platform.exit();
+            }
+        };
+
+        return coreButtonMaker("Exit", exitter);
+    }
+    
+
 
 }
