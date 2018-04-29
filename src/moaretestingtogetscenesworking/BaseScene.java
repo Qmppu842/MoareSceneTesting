@@ -35,9 +35,8 @@ public abstract class BaseScene {
         this.mgr = mgr;
         allThings = new BorderPane();
         buttonText = "Say 'Hello World'";
-        
+
         footer = new FlowPane();
-        footer.getChildren().add(backButton());
         allThings.setBottom(footer);
     }
 
@@ -57,6 +56,7 @@ public abstract class BaseScene {
 
             thisScene = new Scene(root, 300, 250);
         } else if (thisScene == null) {
+            footer.getChildren().add(backButton());
             thisScene = new Scene(allThings, 300, 250);
         }
         return thisScene;

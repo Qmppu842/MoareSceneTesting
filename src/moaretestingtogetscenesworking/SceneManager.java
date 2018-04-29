@@ -16,6 +16,7 @@ public class SceneManager {
     private FastTableScene fastScene;
     private SlowTableScene slowScene;
     private NonTableScene nonScene;
+    private LogicLoader logic;
 
     public SceneManager(Stage primeStage, Application app) {
         this.primeStage = primeStage;
@@ -24,7 +25,8 @@ public class SceneManager {
     }
 
     /**
-     *TODO refactor int to Enums that describe what they are.
+     * TODO refactor int to Enums that describe what they are.
+     *
      * @param tokako <br>
      * 1 = StartScene, <br>
      * 2 = FastTableScene, <br>
@@ -38,12 +40,16 @@ public class SceneManager {
                 break;
             case 2:
                 primeStage.setScene(getFastTableScene());
+                primeStage.setFullScreen(true);
                 break;
             case 3:
                 primeStage.setScene(getSlowTableScene());
+                primeStage.setFullScreen(true);
                 break;
             case 4:
                 primeStage.setScene(getNonTableScene());
+                primeStage.setFullScreen(true);
+                break;
 
         }
 
@@ -55,10 +61,11 @@ public class SceneManager {
     }
 
     public void init() {
+        logic = new LogicLoader();
         startScene = new StartScene(this);
-        fastScene = new FastTableScene(this);
-        slowScene = new SlowTableScene(this);
-        nonScene = new NonTableScene(this);
+        fastScene = new FastTableScene(this, logic);
+        slowScene = new SlowTableScene(this, logic);
+        nonScene = new NonTableScene(this, logic);
     }
 
     public Scene getStartScene() {

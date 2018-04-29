@@ -9,8 +9,11 @@ import javafx.event.EventHandler;
  */
 public class NonTableScene extends BaseScene {
 
-    public NonTableScene(SceneManager mgr) {
+    private LogicLoader logic;
+
+    public NonTableScene(SceneManager mgr, LogicLoader logic) {
         super(mgr);
+        this.logic = logic;
     }
 
     public NonTableScene(SceneManager mgr, String buttonText) {
