@@ -11,6 +11,10 @@ import javafx.scene.control.Button;
  */
 public class NonTableScene extends BaseScene {
 
+    public NonTableScene(SceneManager mgr) {
+        super(mgr);
+    }
+
     public NonTableScene(SceneManager mgr, String buttonText) {
         super(mgr, buttonText);
         setNameOfScene(this.getClass().toString());
@@ -23,16 +27,15 @@ public class NonTableScene extends BaseScene {
         };
     }
 
-    @Override
-    protected Button backButton() {
-        EventHandler<ActionEvent> exitter = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Platform.exit();
-            }
-        };
-
-        return coreButtonMaker("Exit", exitter);
-    }
-
+//    @Override
+//    protected Button backButton() {
+//        EventHandler<ActionEvent> backAction = new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//               mgr.setScene(1);
+//            }
+//        };
+//
+//        return coreButtonMaker("Back to menu.", backAction);
+//    }
 }

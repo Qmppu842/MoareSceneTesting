@@ -23,6 +23,14 @@ public class SceneManager {
         init();
     }
 
+    /**
+     *
+     * @param tokako <br>
+     * 1 = StartScene, <br>
+     * 2 = FastTableScene, <br>
+     * 3 = SlowTableScene, <br>
+     * 4 = NonTableScene
+     */
     public void setScene(int tokako) {
 //        if (tokako == 2) {
 //            primeStage.setScene(getFastTableScene());
@@ -52,10 +60,10 @@ public class SceneManager {
     }
 
     public void init() {
-        startScene = new StartScene(this, "Start here!");
-        fastScene = new FastTableScene(this, "FastOne");
-        slowScene = new SlowTableScene(this, "MADLAD!");
-        nonScene = new NonTableScene(this, "nonTable");
+        startScene = new StartScene(this);
+        fastScene = new FastTableScene(this);
+        slowScene = new SlowTableScene(this);
+        nonScene = new NonTableScene(this);
     }
 
     public Scene getStartScene() {

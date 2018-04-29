@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -14,6 +15,10 @@ public class StartScene extends BaseScene {
 
     public StartScene(SceneManager mgr) {
         super(mgr);
+        VBox napit = new VBox();
+        napit.getChildren().addAll(goToFastTable(), goToSlowTable(), goToNonTable(), backButton());
+
+        allThings.setCenter(napit);
     }
 
     public StartScene(SceneManager mgr, String buttonText) {
@@ -35,20 +40,20 @@ public class StartScene extends BaseScene {
     }
 
     private Button goToSlowTable() {
-         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Platform.exit();//TODO make it not exit
+                mgr.setScene(3);
             }
         };
         return coreButtonMaker("Go to Slow Table Demo.", action);
     }
 
     private Button goToFastTable() {
-         EventHandler<ActionEvent> exitter = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> exitter = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Platform.exit();//TODO make it not exit
+                mgr.setScene(2);
             }
         };
 
@@ -56,10 +61,10 @@ public class StartScene extends BaseScene {
     }
 
     private Button goToNonTable() {
-         EventHandler<ActionEvent> exitter = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> exitter = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Platform.exit();//TODO make it not exit
+                mgr.setScene(4);
             }
         };
 

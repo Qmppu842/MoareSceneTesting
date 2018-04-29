@@ -11,6 +11,10 @@ import javafx.scene.control.Button;
  */
 public class SlowTableScene extends BaseScene {
 
+    public SlowTableScene(SceneManager mgr) {
+        super(mgr);
+    }
+
     public SlowTableScene(SceneManager mgr, String buttonText) {
         super(mgr, buttonText);
         setNameOfScene(this.getClass().toString());
@@ -22,16 +26,17 @@ public class SlowTableScene extends BaseScene {
             }
         };
     }
+//
+//    @Override
+//    protected Button backButton() {
+//        EventHandler<ActionEvent> backAction = new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//               mgr.setScene(1);
+//            }
+//        };
+//
+//        return coreButtonMaker("Back to menu.", backAction);
+//    }
 
-    @Override
-    protected Button backButton() {
-        EventHandler<ActionEvent> exitter = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Platform.exit();
-            }
-        };
-
-        return coreButtonMaker("Exit", exitter);
-    }
 }

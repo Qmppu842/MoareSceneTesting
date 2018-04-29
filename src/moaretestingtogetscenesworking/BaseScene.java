@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -21,17 +22,23 @@ import javafx.stage.Stage;
  */
 public abstract class BaseScene {
 
-    private SceneManager mgr;
+    protected SceneManager mgr;
     protected String buttonText;
     protected String nameOfScene;
     protected Scene thisScene;
     protected EventHandler<ActionEvent> moim;
     protected ActionListener ads;
     protected BorderPane allThings;
+    protected FlowPane footer;
 
     public BaseScene(SceneManager mgr) {
         this.mgr = mgr;
+        allThings = new BorderPane();
         buttonText = "Say 'Hello World'";
+        
+        footer = new FlowPane();
+        footer.getChildren().add(backButton());
+        allThings.setBottom(footer);
     }
 
     public BaseScene(SceneManager mgr, String buttonText) {
@@ -40,7 +47,7 @@ public abstract class BaseScene {
     }
 
     protected Scene getScene() {
-        if (thisScene == null) {
+        if (thisScene == null && allThings == null) {
             Button btn = new Button();
             btn.setText(buttonText);
             btn.setOnAction(moim);
@@ -49,6 +56,8 @@ public abstract class BaseScene {
             root.getChildren().add(btn);
 
             thisScene = new Scene(root, 300, 250);
+        } else if (thisScene == null) {
+            thisScene = new Scene(allThings, 300, 250);
         }
         return thisScene;
     }
@@ -57,7 +66,17 @@ public abstract class BaseScene {
         nameOfScene = name;
     }
 
-    protected abstract Button backButton();
+//       @Override
+    protected Button backButton() {
+        EventHandler<ActionEvent> backAction = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mgr.setScene(1);
+            }
+        };
+
+        return coreButtonMaker("Back to menu.", backAction);
+    }
 
     protected Button coreButtonMaker(String text, EventHandler<ActionEvent> action) {
         Button btn = new Button();
