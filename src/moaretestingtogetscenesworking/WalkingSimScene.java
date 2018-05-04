@@ -112,7 +112,7 @@ public class WalkingSimScene extends BaseScene {
 //    }
     private Point currPoint;
     private ArrayList<Point> route;
-    private double speed = 20.333;
+    private double speed = 10.333;
     private double speedCollector = 0;
     private int nextIndex;
 
