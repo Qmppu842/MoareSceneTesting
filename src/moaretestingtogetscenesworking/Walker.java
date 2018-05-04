@@ -1,14 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package moaretestingtogetscenesworking;
+
+import javafx.scene.paint.Paint;
 
 /**
  *
  * @author Qmppu842
  */
-public class Walker {
+public class Walker implements Updatable {
     
+    private double speed;
+    private double speedCollecter;
+    private int x;
+    private int y;
+    private Paint color;
+    private int maxHP;
+
+    @Override
+    public void update() {
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+    
+    
+
 }
