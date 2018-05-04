@@ -17,6 +17,7 @@ public class SceneManager {
     private SlowTableScene slowScene;
     private NonTableScene nonScene;
     private LogicLoader logic;
+    private WalkingSimScene walkingSimScene;
 
     public SceneManager(Stage primeStage, Application app) {
         this.primeStage = primeStage;
@@ -48,7 +49,13 @@ public class SceneManager {
                 break;
             case 4:
                 primeStage.setScene(getNonTableScene());
+                primeStage.setFullScreenExitHint("Press powerbutton to escape me!");
                 primeStage.setFullScreen(true);
+                break;
+            case 5:
+                primeStage.setScene(getWalkingSimScene());
+                primeStage.setFullScreen(true);
+                primeStage.setAlwaysOnTop(true);
                 break;
 
         }
@@ -66,6 +73,7 @@ public class SceneManager {
         fastScene = new FastTableScene(this, logic);
         slowScene = new SlowTableScene(this, logic);
         nonScene = new NonTableScene(this, logic);
+        walkingSimScene = new WalkingSimScene(this, logic);
     }
 
     public Scene getStartScene() {
@@ -82,5 +90,9 @@ public class SceneManager {
 
     public Scene getNonTableScene() {
         return nonScene.getScene();
+    }
+
+    public Scene getWalkingSimScene() {
+        return walkingSimScene.getScene();
     }
 }

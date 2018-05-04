@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package moaretestingtogetscenesworking;
 
 import java.awt.Point;
@@ -10,57 +15,57 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 
 /**
  *
  * @author Qmppu842
  */
-public class NonTableScene extends BaseScene {
+public class WalkingSimScene extends BaseScene {
 
     private LogicLoader logic;
 
     private Canvas wall;
     private GraphicsContext gc;
 
-    public NonTableScene(SceneManager mgr, LogicLoader logic) {
+    public WalkingSimScene(SceneManager mgr, String buttonText) {
+        super(mgr, buttonText);
+        setNameOfScene(this.getClass().toString());
+        moim = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("$25, and  that's  my last offer");
+                mgr.setScene(1);
+            }
+        };
+    }
+
+    public WalkingSimScene(SceneManager mgr, LogicLoader logic) {
         super(mgr);
 
         this.logic = logic;
+        route=StaticThings.generateFirstTestRoute();
         wall = new Canvas(1500, 900);
         gc = wall.getGraphicsContext2D();
         allThings.setCenter(wall);
-        footer.getChildren().add(generateNewRoute());
+//        footer.getChildren().add(generateNewRoute());
         AnimationTimer animator = generateAnimator();
         footer.getChildren().add(startWalkingBalls(animator));
         footer.getChildren().add(resetWalker());
 
     }
 
-    public NonTableScene(SceneManager mgr, String buttonText) {
-        super(mgr, buttonText);
-        setNameOfScene(this.getClass().toString());
-        moim = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("TRUE MADNESS");
-                mgr.setScene(1);
-            }
-        };
-    }
-
-    protected Button generateNewRoute() {
-        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                logic.makeNewNonTable();
-                route = logic.getNonTableRoute();
-                drawRoute();
-            }
-        };
-
-        return coreButtonMaker("Generate new Route.", action);
-    }
+//    protected Button generateNewRoute() {
+//        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                logic.makeNewNonTable();
+//                route = logic.getNonTableRoute();
+//                drawRoute();
+//            }
+//        };
+//
+//        return coreButtonMaker("Generate new Route.", action);
+//    }
 
     private void drawRoute() {
         gc.clearRect(0, 0, wall.getWidth(), wall.getHeight());
@@ -95,7 +100,7 @@ public class NonTableScene extends BaseScene {
             public void handle(ActionEvent event) {
                 currPoint = null;
                 nextIndex = 1;
-
+                speedCollector = 0;
             }
         };
 
@@ -107,7 +112,8 @@ public class NonTableScene extends BaseScene {
 //    }
     private Point currPoint;
     private ArrayList<Point> route;
-    private int speed = 5;
+    private double speed = 20.333;
+    private double speedCollector = 0;
     private int nextIndex;
 
     private AnimationTimer generateAnimator() {
@@ -115,8 +121,7 @@ public class NonTableScene extends BaseScene {
             currPoint = route.get(0);
 
         } catch (Exception e) {
-            logic.makeNewNonTable();
-            route = logic.getNonTableRoute();
+            route = StaticThings.generateFirstTestRoute();
             currPoint = route.get(0);
         }
 //        Circle circle = new Circle();
@@ -136,13 +141,13 @@ public class NonTableScene extends BaseScene {
                         currPoint = route.get(0);
 
                     } catch (Exception e) {
-                        logic.makeNewNonTable();
-                        route = logic.getNonTableRoute();
+                        route = StaticThings.generateFirstTestRoute();
                         currPoint = route.get(0);
                     }
                     nextIndex = 1;
                 }
                 if (nextIndex >= route.size()) {
+                    System.out.println("speedCollector: " + speedCollector);
                     this.stop();
                 } else {
                     Point next = route.get(nextIndex);
@@ -153,22 +158,26 @@ public class NonTableScene extends BaseScene {
 //                int deltaYSquare = deltaY * deltaY;
 //                int sqSum = deltaXSquare + deltaYSquare;
 //                double dist = Math.sqrt(sqSum * 1.0);
-//                double ratio = deltaY / (deltaX * 1.0);
+//                double ratio = deltaX / (deltaY * 1.0);
 //                Point middle = new Point();
-                    int xMult = 1;
-                    int yMult = 1;
+                    double xMult = 1;
+                    double yMult = 1;
                     if (currPoint.x > next.x) {
                         xMult = -1;
                     }
                     if (currPoint.y > next.y) {
                         yMult = -1;
                     }
-
-                    if (asd <= speed) {
+                    speedCollector += speed;
+                    if (asd <= speedCollector) {
                         currPoint = next;
+                        speedCollector += speedCollector - asd;
                     } else {
-                        currPoint.x += speed * xMult;
-                        currPoint.y += speed * yMult;
+                        currPoint.x += speedCollector * xMult;
+                        currPoint.y += speedCollector * yMult;
+                    }
+                    if (speedCollector > 1) {
+                        speedCollector %= 1;
                     }
                     if (currPoint == next) {
                         nextIndex++;
@@ -179,6 +188,7 @@ public class NonTableScene extends BaseScene {
 //                    circle.setCenterX(currPoint.x);
 //                    circle.setCenterY(currPoint.y);
                     drawRoute();
+                    gc.setFill(Color.BLACK);
                     gc.fillOval(currPoint.x - 10, currPoint.y - 10, 20, 20);
                 }
             }
@@ -186,5 +196,4 @@ public class NonTableScene extends BaseScene {
 
         return animator;
     }
-
 }

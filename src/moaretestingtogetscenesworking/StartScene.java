@@ -15,7 +15,7 @@ public class StartScene extends BaseScene {
     public StartScene(SceneManager mgr) {
         super(mgr);
         VBox napit = new VBox();
-        napit.getChildren().addAll(goToFastTable(), goToSlowTable(), goToNonTable(), backButton());
+        napit.getChildren().addAll(goToFastTable(), goToSlowTable(), goToNonTable(), goToWalkingSimTable(), backButton());
 
         allThings.setCenter(napit);
     }
@@ -62,6 +62,17 @@ public class StartScene extends BaseScene {
         };
 
         return coreButtonMaker("Go to Non-Table Demo.", exitter);
+    }
+
+    private Button goToWalkingSimTable() {
+        EventHandler<ActionEvent> entterer = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mgr.setScene(5);
+            }
+        };
+
+        return coreButtonMaker("Go to walking sim Demo.", entterer);
     }
 
     @Override
