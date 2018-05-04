@@ -21,7 +21,7 @@ public class StartEndPointArrayList {
         this.loppu = loppu;
         route = new ArrayList<>();
         fissio = new Random();
-        inHowManySteps = fissio.nextInt(1000);
+        inHowManySteps = fissio.nextInt(500);
     }
 
     public void generateNewRoute() {
@@ -42,6 +42,14 @@ public class StartEndPointArrayList {
                 y = fissio.nextInt(10) + 1; 
                 x = fissio.nextInt(25) - 12;
             }
+//            some wrapping settings
+//             if (fissio.nextDouble() > 0.7) {
+//                x = fissio.nextInt(10) + 1;
+//                y = fissio.nextInt(25) - 12;
+//            } else {
+//                y = fissio.nextInt(10) + 1; 
+//                x = fissio.nextInt(25) - 12;
+//            }
             Point next = new Point((currStep.x + x) % 1500, (currStep.y + y) % 900);
             route.add(next);
         }

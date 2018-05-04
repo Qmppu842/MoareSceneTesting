@@ -2,6 +2,7 @@ package moaretestingtogetscenesworking;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -9,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 /**
  *
@@ -29,6 +31,10 @@ public class NonTableScene extends BaseScene {
         gc = wall.getGraphicsContext2D();
         allThings.setCenter(wall);
         footer.getChildren().add(generateNewRoute());
+        AnimationTimer animator = generateAnimator();
+        footer.getChildren().add(startWalkingBalls(animator));
+        footer.getChildren().add(resetWalker());
+
     }
 
     public NonTableScene(SceneManager mgr, String buttonText) {
@@ -48,6 +54,7 @@ public class NonTableScene extends BaseScene {
             @Override
             public void handle(ActionEvent event) {
                 logic.makeNewNonTable();
+                route = logic.getNonTableRoute();
                 drawRoute();
             }
         };
@@ -65,7 +72,120 @@ public class NonTableScene extends BaseScene {
         gc.setStroke(road);
         ArrayList<Point> polku = logic.getNonTableRoute();
         for (int i = 1; i < polku.size(); i++) {
-            gc.strokeLine(polku.get(i-1).x, polku.get(i-1).y, polku.get(i).x, polku.get(i).y);
+            gc.strokeLine(polku.get(i - 1).x, polku.get(i - 1).y, polku.get(i).x, polku.get(i).y);
         }
     }
+
+    protected Button startWalkingBalls(AnimationTimer animator) {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+//                logic.makeNewNonTable();
+//                drawRoute();
+                generateAnimator().start();
+//                animator.start();
+            }
+        };
+
+        return coreButtonMaker("Start walking.", action);
+    }
+
+    protected Button resetWalker() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                currPoint = null;
+                nextIndex = 1;
+
+            }
+        };
+
+        return coreButtonMaker("Reset walker.", action);
+    }
+
+//    private Circle generateCircle() {
+//                return circle;
+//    }
+    private Point currPoint;
+    private ArrayList<Point> route;
+    private int speed = 200;
+    private int nextIndex;
+
+    private AnimationTimer generateAnimator() {
+        try {
+            currPoint = route.get(0);
+
+        } catch (Exception e) {
+            logic.makeNewNonTable();
+            route = logic.getNonTableRoute();
+            currPoint = route.get(0);
+        }
+//        Circle circle = new Circle();
+//        circle.setCenterX(currPoint.x);
+//        circle.setCenterY(currPoint.y);
+//        circle.setRadius(40);
+//        circle.setFill(Color.BLUE);
+//        wall.getChildren().add(circle);
+//
+//        wall.    
+
+        AnimationTimer animator = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (currPoint == null) {
+                    try {
+                        currPoint = route.get(0);
+
+                    } catch (Exception e) {
+                        logic.makeNewNonTable();
+                        route = logic.getNonTableRoute();
+                        currPoint = route.get(0);
+                    }
+                    nextIndex = 1;
+                }
+                if (nextIndex >= route.size()) {
+                    this.stop();
+                } else {
+                    Point next = route.get(nextIndex);
+                    double asd = currPoint.distance(next);
+//                int deltaX = next.x - currPoint.x;
+//                int deltaY = next.y - currPoint.y;
+//                int deltaXSquare = deltaX * deltaX;
+//                int deltaYSquare = deltaY * deltaY;
+//                int sqSum = deltaXSquare + deltaYSquare;
+//                double dist = Math.sqrt(sqSum * 1.0);
+//                double ratio = deltaY / (deltaX * 1.0);
+//                Point middle = new Point();
+                    int xMult = 1;
+                    int yMult = 1;
+                    if (currPoint.x > next.x) {
+                        xMult = -1;
+                    }
+                    if (currPoint.y > next.y) {
+                        yMult = -1;
+                    }
+
+                    if (asd <= speed) {
+                        currPoint = next;
+                    } else {
+                        currPoint.x += speed * xMult;
+                        currPoint.y += speed * yMult;
+                    }
+                    if (currPoint == next) {
+                        nextIndex++;
+                    }
+                    System.out.println("currrent point: " + currPoint);
+                    System.out.println("next point:" + next);
+
+//                    circle.setCenterX(currPoint.x);
+//                    circle.setCenterY(currPoint.y);
+                    drawRoute();
+                    gc.fillOval(currPoint.x - 10, currPoint.y - 10, 20, 20);
+                }
+            }
+        };
+
+        return animator;
+    }
+
 }
