@@ -59,27 +59,18 @@ public class Walker implements Updatable {
         currentHP = this.maxHP;
         this.ROUTE = ROUTE;
     }
-//    ArrayList<Point> ROUTE;
-    Point currPoint = null;
+    private Point currPoint = null;
 
     @Override
     public void update(GraphicsContext gc) {
 
         if (currPoint == null) {
-//            try {
             currPoint = new Point(ROUTE.get(0));
-//
-//            } catch (Exception e) {
-//                ROUTE = StaticThings.generateFirstTestRoute();
-//                currPoint = ROUTE.get(0);
-//            }
             nextIndex = 1;
         }
         if (nextIndex >= ROUTE.size()) {
-//            System.out.println("speedCollector: " + speedCollector);
         } else {
             Point next = new Point(ROUTE.get(nextIndex));
-//            Point arr = new Point();
             double asd = currPoint.distance(next);
 //                int deltaX = next.x - currPoint.x;
 //                int deltaY = next.y - currPoint.y;

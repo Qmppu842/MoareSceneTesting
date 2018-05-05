@@ -47,26 +47,12 @@ public class WalkingSimScene extends BaseScene {
         wall = new Canvas(1500, 900);
         gc = wall.getGraphicsContext2D();
         allThings.setCenter(wall);
-//        footer.getChildren().add(generateNewRoute());
         AnimationTimer animator = generateAnimator();
         footer.getChildren().add(toggleWalkingBalls(animator));
         footer.getChildren().add(newWalker());
-//        route = StaticThings.generateFirstTestRoute();
 
     }
 
-//    protected Button generateNewRoute() {
-//        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                logic.makeNewNonTable();
-//                route = logic.getNonTableRoute();
-//                drawRoute();
-//            }
-//        };
-//
-//        return coreButtonMaker("Generate new Route.", action);
-//    }
     private void drawRoute() {
         gc.clearRect(0, 0, wall.getWidth(), wall.getHeight());
         Paint woods = new Color(0, 1, 0, 0.2);
@@ -84,10 +70,7 @@ public class WalkingSimScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                logic.makeNewNonTable();
-//                drawRoute();
                 generateAnimator().start();
-//                animator.start();
             }
         };
 
@@ -99,13 +82,10 @@ public class WalkingSimScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                logic.makeNewNonTable();
-//                drawRoute();
                 if (isAnimationTimerRunning) {
                     animator.stop();
                     isAnimationTimerRunning = false;
                 } else {
-//                generateAnimator().start();
                     isAnimationTimerRunning = true;
                     animator.start();
                 }
@@ -119,40 +99,13 @@ public class WalkingSimScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                currPoint = null;
-//                nextIndex = 1;
-//                speedCollector = 0;
-                walkers.add(new Walker(15.3, null, -1, -1, ROUTE));
+                walkers.add(new Walker(-1, null, -1, -1, ROUTE));
             }
         };
 
         return coreButtonMaker("New walker.", action);
     }
-
-//    private Circle generateCircle() {
-//                return circle;
-//    }
-//    private Point currPoint;
-//    private ArrayList<Point> route;
-//    private double speed = 10.333;
-//    private double speedCollector = 0;
-//    private int nextIndex;
     private AnimationTimer generateAnimator() {
-//        try {
-//            currPoint = route.get(0);
-//
-//        } catch (Exception e) {
-//            route = StaticThings.generateFirstTestRoute();
-//            currPoint = route.get(0);
-//        }
-//        Circle circle = new Circle();
-//        circle.setCenterX(currPoint.x);
-//        circle.setCenterY(currPoint.y);
-//        circle.setRadius(40);
-//        circle.setFill(Color.BLUE);
-//        wall.getChildren().add(circle);
-//
-//        wall.    
 
         AnimationTimer animator = new AnimationTimer() {
             @Override
@@ -161,62 +114,6 @@ public class WalkingSimScene extends BaseScene {
                 for (Updatable walker : walkers) {
                     walker.update(gc);
                 }
-
-//                if (currPoint == null) {
-//                    try {
-//                        currPoint = route.get(0);
-//
-//                    } catch (Exception e) {
-//                        route = StaticThings.generateFirstTestRoute();
-//                        currPoint = route.get(0);
-//                    }
-//                    nextIndex = 1;
-//                }
-//                if (nextIndex >= route.size()) {
-//                    System.out.println("speedCollector: " + speedCollector);
-//                    this.stop();
-//                } else {
-//                    Point next = route.get(nextIndex);
-//                    double asd = currPoint.distance(next);
-////                int deltaX = next.x - currPoint.x;
-////                int deltaY = next.y - currPoint.y;
-////                int deltaXSquare = deltaX * deltaX;
-////                int deltaYSquare = deltaY * deltaY;
-////                int sqSum = deltaXSquare + deltaYSquare;
-////                double dist = Math.sqrt(sqSum * 1.0);
-////                double ratio = deltaX / (deltaY * 1.0);
-////                Point middle = new Point();
-//                    double xMult = 1;
-//                    double yMult = 1;
-//                    if (currPoint.x > next.x) {
-//                        xMult = -1;
-//                    }
-//                    if (currPoint.y > next.y) {
-//                        yMult = -1;
-//                    }
-//                    speedCollector += speed;
-//                    if (asd <= speedCollector) {
-//                        currPoint = next;
-//                        speedCollector += speedCollector - asd;
-//                    } else {
-//                        currPoint.x += speedCollector * xMult;
-//                        currPoint.y += speedCollector * yMult;
-//                    }
-//                    if (speedCollector > 1) {
-//                        speedCollector %= 1;
-//                    }
-//                    if (currPoint == next) {
-//                        nextIndex++;
-//                    }
-////                    System.out.println("currrent point: " + currPoint);
-////                    System.out.println("next point:" + next);
-//
-////                    circle.setCenterX(currPoint.x);
-////                    circle.setCenterY(currPoint.y);
-//                    drawRoute();
-//                    gc.setFill(Color.BLACK);
-//                    gc.fillOval(currPoint.x - 10, currPoint.y - 10, 20, 20);
-//                }
             }
         };
 

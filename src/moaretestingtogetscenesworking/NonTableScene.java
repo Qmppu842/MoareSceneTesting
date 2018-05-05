@@ -10,7 +10,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 
 /**
  *
@@ -79,10 +78,7 @@ public class NonTableScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                logic.makeNewNonTable();
-//                drawRoute();
                 generateAnimator().start();
-//                animator.start();
             }
         };
 
@@ -102,9 +98,6 @@ public class NonTableScene extends BaseScene {
         return coreButtonMaker("Reset walker.", action);
     }
 
-//    private Circle generateCircle() {
-//                return circle;
-//    }
     private Point currPoint;
     private ArrayList<Point> route;
     private int speed = 5;
@@ -119,14 +112,6 @@ public class NonTableScene extends BaseScene {
             route = logic.getNonTableRoute();
             currPoint = route.get(0);
         }
-//        Circle circle = new Circle();
-//        circle.setCenterX(currPoint.x);
-//        circle.setCenterY(currPoint.y);
-//        circle.setRadius(40);
-//        circle.setFill(Color.BLUE);
-//        wall.getChildren().add(circle);
-//
-//        wall.    
 
         AnimationTimer animator = new AnimationTimer() {
             @Override
@@ -147,14 +132,6 @@ public class NonTableScene extends BaseScene {
                 } else {
                     Point next = route.get(nextIndex);
                     double asd = currPoint.distance(next);
-//                int deltaX = next.x - currPoint.x;
-//                int deltaY = next.y - currPoint.y;
-//                int deltaXSquare = deltaX * deltaX;
-//                int deltaYSquare = deltaY * deltaY;
-//                int sqSum = deltaXSquare + deltaYSquare;
-//                double dist = Math.sqrt(sqSum * 1.0);
-//                double ratio = deltaY / (deltaX * 1.0);
-//                Point middle = new Point();
                     int xMult = 1;
                     int yMult = 1;
                     if (currPoint.x > next.x) {
@@ -173,11 +150,6 @@ public class NonTableScene extends BaseScene {
                     if (currPoint == next) {
                         nextIndex++;
                     }
-//                    System.out.println("currrent point: " + currPoint);
-//                    System.out.println("next point:" + next);
-
-//                    circle.setCenterX(currPoint.x);
-//                    circle.setCenterY(currPoint.y);
                     drawRoute();
                     gc.fillOval(currPoint.x - 10, currPoint.y - 10, 20, 20);
                 }
