@@ -67,7 +67,7 @@ public class Walker implements Updatable {
 
         if (currPoint == null) {
 //            try {
-            currPoint = ROUTE.get(0);
+            currPoint = new Point(ROUTE.get(0));
 //
 //            } catch (Exception e) {
 //                ROUTE = StaticThings.generateFirstTestRoute();
@@ -76,9 +76,10 @@ public class Walker implements Updatable {
             nextIndex = 1;
         }
         if (nextIndex >= ROUTE.size()) {
-            System.out.println("speedCollector: " + speedCollector);
+//            System.out.println("speedCollector: " + speedCollector);
         } else {
-            Point next = ROUTE.get(nextIndex);
+            Point next = new Point(ROUTE.get(nextIndex));
+//            Point arr = new Point();
             double asd = currPoint.distance(next);
 //                int deltaX = next.x - currPoint.x;
 //                int deltaY = next.y - currPoint.y;
@@ -101,8 +102,12 @@ public class Walker implements Updatable {
                 currPoint = next;
                 speedCollector += speedCollector - asd;
             } else {
-                currPoint.x += speedCollector * xMult;
-                currPoint.y += speedCollector * yMult;
+                if (next.x != currPoint.x) {
+                    currPoint.x += speedCollector * xMult;
+                }
+                if (next.y != currPoint.y) {
+                    currPoint.y += speedCollector * yMult;
+                }
             }
             if (speedCollector > 1) {
                 speedCollector %= 1;

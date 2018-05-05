@@ -122,7 +122,7 @@ public class WalkingSimScene extends BaseScene {
 //                currPoint = null;
 //                nextIndex = 1;
 //                speedCollector = 0;
-                walkers.add(new Walker(-1, null, -1, -1, ROUTE));
+                walkers.add(new Walker(15.3, null, -1, -1, ROUTE));
             }
         };
 
