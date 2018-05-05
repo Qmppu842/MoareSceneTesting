@@ -2,6 +2,7 @@ package moaretestingtogetscenesworking;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -50,6 +51,7 @@ public class WalkingSimScene extends BaseScene {
         AnimationTimer animator = generateAnimator();
         footer.getChildren().add(toggleWalkingBalls(animator));
         footer.getChildren().add(newWalker());
+        footer.getChildren().add(dealDamageToCertain());
 
     }
 
@@ -95,16 +97,58 @@ public class WalkingSimScene extends BaseScene {
         return coreButtonMaker("Start walking.", action);
     }
 
-    protected Button newWalker() {
+    private Button newWalker() {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 walkers.add(new Walker(-1, null, -1, -1, ROUTE));
+
+//                footer.getChildren().add(dealDamageToCertain(walkers.size() - 1));
             }
         };
 
         return coreButtonMaker("New walker.", action);
     }
+
+    private Button dealDamageToCertain() {
+//        boolean isAlive = true;
+//        Button btn = new Button();
+//        btn.setText("Deal 10 dmge to walker#" + index);
+
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+//            private boolean isAlive = true;
+
+            @Override
+            public void handle(ActionEvent event) {
+                Random ran = new Random();
+//                isAlive = 
+                try {
+                    dealDamageToCertainUnit(ran.nextInt(walkers.size()), 10);
+                } catch (Exception e) {
+                    System.out.println("No more walkers to damage. Great job! /s");
+                }
+//                String id = btn.getId();
+//                if (!isAlive) {
+////                    footer.getChildren().remove(btn);
+////                    btn.setDisable(true);
+////                    btn.setVisible(false);
+////                    btn.set
+//                }
+            }
+        };
+//        btn.setOnAction(action);
+        return coreButtonMaker("Deal 10 dmge to random walker", action);
+    }
+
+    private boolean dealDamageToCertainUnit(int index, int amount) {
+        Walker toDeal = (Walker) walkers.get(index);
+        boolean isAlive = toDeal.dealDamageToThis(amount);
+        if (!isAlive) {
+            walkers.remove(index);
+        }
+        return isAlive;
+    }
+
     private AnimationTimer generateAnimator() {
 
         AnimationTimer animator = new AnimationTimer() {

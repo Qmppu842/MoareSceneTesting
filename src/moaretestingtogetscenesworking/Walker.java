@@ -108,9 +108,29 @@ public class Walker implements Updatable {
             }
             gc.setFill(color);
             gc.fillOval(currPoint.x - (size / 2), currPoint.y - (size / 2), size, size);
+            drawHPBar(gc);
             x = currPoint.x;
             y = currPoint.y;
         }
 
+    }
+
+    /**
+     *
+     * @param amount
+     * @return true if alive, false if dead
+     */
+    protected boolean dealDamageToThis(int amount) {
+        currentHP -= amount;
+        return currentHP >= 0;
+    }
+
+    //if currentPoint causes problems just wrap it with Point holder = new Point(currentPoint);
+    private void drawHPBar(GraphicsContext gc) {
+        gc.setFill(Color.WHITE);
+        gc.fillRect(currPoint.x - (size / 2) - 1, currPoint.y - (size / 2) - 10 - 1, size + 2, 7);
+        gc.setFill(Color.CRIMSON);
+        double prossentHP = (currentHP / (maxHP / 100.0)) / 100;
+        gc.fillRect(currPoint.x - (size / 2), currPoint.y - (size / 2) - 10, size * prossentHP, 5);
     }
 }
