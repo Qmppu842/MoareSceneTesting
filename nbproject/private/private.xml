@@ -4,13 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/StartEndPointArrayList.java</file>
+            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/Walker.java</file>
+            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/RouteTile.java</file>
             <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/MoareTestingToGetScenesWorking.java</file>
-            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/FastTableScene.java</file>
-            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/NonTableScene.java</file>
-            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/SlowTableScene.java</file>
-            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/LogicLoader.java</file>
+            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/Updatable.java</file>
+            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/WalkingSimScene.java</file>
             <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/SceneManager.java</file>
-            <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/StartScene.java</file>
             <file>file:/D:/NetbeansProcjects/MoareTestingToGetScenesWorking/src/moaretestingtogetscenesworking/BaseScene.java</file>
         </group>
     </open-files>

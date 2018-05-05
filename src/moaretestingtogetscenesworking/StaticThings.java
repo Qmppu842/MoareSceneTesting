@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package moaretestingtogetscenesworking;
 
 import java.awt.Point;
@@ -58,5 +53,11 @@ public class StaticThings {
         polku.add(new Point(1500, 850));
 
         return polku;
+    }
+    
+    public static ArrayList<Point> generateFirstTowerPlaces(){
+      ArrayList<Point> towerPlaces = new ArrayList<>();
+      towerPlaces.add(new Point(1250, 250));
+      return towerPlaces;
     }
 }

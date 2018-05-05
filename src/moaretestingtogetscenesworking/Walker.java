@@ -22,6 +22,8 @@ public class Walker implements Updatable {
     private final ArrayList<Point> ROUTE;
     private int currentHP;
     private int nextIndex;
+    private final int ID;
+    private Point currPoint = null;
 
     /**
      *
@@ -33,8 +35,9 @@ public class Walker implements Updatable {
      * @param maxHP default = 100
      * @param size default = 30
      * @param ROUTE Must give ROUTE!
+     * @param id Unique identifier
      */
-    public Walker(double speed, Paint color, int maxHP, int size, ArrayList<Point> ROUTE) {
+    public Walker(double speed, Paint color, int maxHP, int size, ArrayList<Point> ROUTE, String id) {
         if (speed <= 0) {
             this.speed = 5;
         } else {
@@ -58,8 +61,12 @@ public class Walker implements Updatable {
         }
         currentHP = this.maxHP;
         this.ROUTE = ROUTE;
+        this.ID = id.hashCode();
     }
-    private Point currPoint = null;
+
+    public int getID() {
+        return ID;
+    }
 
     @Override
     public void update(GraphicsContext gc) {
@@ -131,6 +138,11 @@ public class Walker implements Updatable {
         gc.fillRect(currPoint.x - (size / 2) - 1, currPoint.y - (size / 2) - 10 - 1, size + 2, 7);
         gc.setFill(Color.CRIMSON);
         double prossentHP = (currentHP / (maxHP / 100.0)) / 100;
-        gc.fillRect(currPoint.x - (size / 2), currPoint.y - (size / 2) - 10, size * prossentHP, 5);
+        double scaledSize = Math.max(size * prossentHP, 1);
+        if (currentHP == 0) {
+            scaledSize = 0;
+        }
+        gc.fillRect(currPoint.x - (size / 2), currPoint.y - (size / 2) - 10, scaledSize, 5);
+        
     }
 }

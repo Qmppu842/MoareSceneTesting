@@ -1,11 +1,16 @@
 package moaretestingtogetscenesworking;
 
+import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.PointerInfo;
+import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -39,6 +44,11 @@ public class WalkingSimScene extends BaseScene {
         ROUTE = StaticThings.generateFirstTestRoute();
     }
 
+//    private Robot robo;
+    private int x;
+    private int y;
+    private PointerInfo info;
+
     public WalkingSimScene(SceneManager mgr, LogicLoader logic) {
         super(mgr);
 
@@ -48,11 +58,54 @@ public class WalkingSimScene extends BaseScene {
         wall = new Canvas(1500, 900);
         gc = wall.getGraphicsContext2D();
         allThings.setCenter(wall);
+
+        makeTowerList(); // this probably should be in first few lines of generateAnimator.
         AnimationTimer animator = generateAnimator();
+
         footer.getChildren().add(toggleWalkingBalls(animator));
         footer.getChildren().add(newWalker());
         footer.getChildren().add(dealDamageToCertain());
 
+        clickedTowerIndex = -1;
+        /*
+         * This seems already super demanding... if it ends bottle necking, it
+         * is probably then better implement layout that overlaps canvas and
+         * then add clickable-shapes to it and position then correctly somehow...
+         */
+        wall.setOnMouseClicked((event) -> {
+            System.out.println("moi?");
+            info = MouseInfo.getPointerInfo();
+            Point loc = info.getLocation();
+
+            Bounds boundsInScreen = wall.localToScreen(wall.getBoundsInLocal());
+            double wallX = 0;
+            double wallY = 0;
+            try {
+                wallX = boundsInScreen.getMinX();
+                wallY = boundsInScreen.getMinY();
+            } catch (Exception e) {
+            }
+            Point moi = new Point((int) (loc.x - wallX), (int) (loc.y - wallY));
+            isThereTowerUnderClick(moi);
+
+//            System.out.println("location of mouse: " + loc);
+//            System.out.println("corrected x: " + (loc.x - wallX));
+//            System.out.println("corrected y: " + (loc.y - wallY));
+//            System.out.println("wallX: " + wallX);
+//            System.out.println("wallY: " + wallY);
+        });
+
+    }
+    private int clickedTowerIndex;
+
+    private void isThereTowerUnderClick(Point click) {
+        for (int i = 0; i < towers.size(); i++) {
+            boolean asdd = towers.get(i).isClickHere(click);
+            if (asdd) {
+                clickedTowerIndex = i;
+                break;
+            }
+        }
     }
 
     private void drawRoute() {
@@ -101,7 +154,7 @@ public class WalkingSimScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                walkers.add(new Walker(-1, null, -1, -1, ROUTE));
+                walkers.add(new Walker(-1, null, -1, -1, ROUTE, "" + walkers.size()));
 
 //                footer.getChildren().add(dealDamageToCertain(walkers.size() - 1));
             }
@@ -158,9 +211,27 @@ public class WalkingSimScene extends BaseScene {
                 for (Updatable walker : walkers) {
                     walker.update(gc);
                 }
+                for (EmptyTowerPlace tower : towers) {
+                    tower.update(gc);
+                }
+//                if (clickedTowerIndex != -1) {
+//                    towers.
+//                }
             }
         };
 
         return animator;
+    }
+
+    private ArrayList<EmptyTowerPlace> towers;
+    private RouteTile road;
+
+    private void makeTowerList() {
+        towers = new ArrayList<>();
+        road = new RouteTile(ROUTE, StaticThings.generateFirstTowerPlaces());
+        for (Point towerPlace : road.getTowerPlaces()) {
+            towers.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
+        }
+
     }
 }
