@@ -10,42 +10,43 @@ import javafx.scene.shape.Circle;
  *
  * @author Qmppu842
  */
-public class EmptyTowerPlace implements Updatable {
+public class EmptyTowerPlace extends BaseTower {
 
-    private Point position;
-    private int size;
-    private Color outside;
-    private Color inside;
-    private Circle clickArea;
-    private boolean isClicked;
+//    private Point position;
+//    private int size;
+//    private Color outside;
+//    private Color inside;
+////    private Circle clickArea;
+//    private boolean isClicked;
 
     public EmptyTowerPlace(Point position, int size, Color outside, Color inside) {
-        this.position = position;
-        this.size = size;
-        this.outside = outside;
-        this.inside = inside;
-
-        isClicked = false;
-        clickArea = new Circle(size);
-        clickArea.setOnMouseClicked((event) -> {
-            isClicked = true;
-        });
+        super(position, size, outside, inside);
+//        this.position = position;
+//        this.size = size;
+//        this.outside = outside;
+//        this.inside = inside;
+//
+//        isClicked = false;
+//        clickArea = new Circle(size);
+//        clickArea.setOnMouseClicked((event) -> {
+//            isClicked = true;
+//        });
 
     }
 
-    protected boolean isClickHere(Point click) {
-        double aa = click.distance(position);
-        boolean returnValue = false;
-        if (aa < (size / 2) + 5) {
-            returnValue = true;
-            isClicked = true;
-        }
-        return returnValue;
-    }
-
-    protected boolean isIsClicked() {
-        return isClicked;
-    }
+//    protected boolean isClickHere(Point click) {
+//        double aa = click.distance(position);
+//        boolean returnValue = false;
+//        if (aa < (size / 2) + 5) {
+//            returnValue = true;
+//            isClicked = true;
+//        }
+//        return returnValue;
+//    }
+//
+//    protected boolean isIsClicked() {
+//        return isClicked;
+//    }
 
     @Override
     public void update(GraphicsContext gc) {

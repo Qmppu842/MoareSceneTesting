@@ -66,12 +66,15 @@ public class WalkingSimScene extends BaseScene {
         footer.getChildren().add(newWalker());
         footer.getChildren().add(dealDamageToCertain());
 
-        clickedTowerIndex = -1;
         /*
+         * TODO: Yes implement this because now it is total insanity to try to
+         * get hovering and other normal mouse events to even barely work. <br>
          * This seems already super demanding... if it ends bottle necking, it
          * is probably then better implement layout that overlaps canvas and
-         * then add clickable-shapes to it and position then correctly somehow...
+         * then add clickable-shapes to it and position then correctly
+         * somehow...
          */
+//        clickedTowerIndex = -1;
         wall.setOnMouseClicked((event) -> {
             System.out.println("moi?");
             info = MouseInfo.getPointerInfo();
@@ -96,13 +99,13 @@ public class WalkingSimScene extends BaseScene {
         });
 
     }
-    private int clickedTowerIndex;
+//    private int clickedTowerIndex;
 
     private void isThereTowerUnderClick(Point click) {
         for (int i = 0; i < towers.size(); i++) {
             boolean asdd = towers.get(i).isClickHere(click);
             if (asdd) {
-                clickedTowerIndex = i;
+//                clickedTowerIndex = i;
                 break;
             }
         }
@@ -211,7 +214,10 @@ public class WalkingSimScene extends BaseScene {
                 for (Updatable walker : walkers) {
                     walker.update(gc);
                 }
-                for (EmptyTowerPlace tower : towers) {
+                for (BaseTower tower : towers) {
+                    if (tower.isClicked) {
+                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside);
+                    }
                     tower.update(gc);
                 }
 //                if (clickedTowerIndex != -1) {
@@ -223,7 +229,7 @@ public class WalkingSimScene extends BaseScene {
         return animator;
     }
 
-    private ArrayList<EmptyTowerPlace> towers;
+    private ArrayList<BaseTower> towers;
     private RouteTile road;
 
     private void makeTowerList() {
