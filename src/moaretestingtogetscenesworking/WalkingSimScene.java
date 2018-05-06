@@ -90,6 +90,7 @@ public class WalkingSimScene extends BaseScene {
             }
             Point moi = new Point((int) (loc.x - wallX), (int) (loc.y - wallY));
             isThereTowerUnderClick(moi);
+            isThereEmptyTowerUnderClick(moi);
 
 //            System.out.println("location of mouse: " + loc);
 //            System.out.println("corrected x: " + (loc.x - wallX));
@@ -112,6 +113,17 @@ public class WalkingSimScene extends BaseScene {
         }
     }
 
+    private void isThereEmptyTowerUnderClick(Point click) {
+        for (int i = 0; i < towerPlaces.size(); i++) {
+            boolean asdd = towerPlaces.get(i).isClickHere(click);
+            if (asdd) {
+//                clickedTowerIndex = i;
+//tower.
+                break;
+            }
+        }
+    }
+    
     private void drawRoute() {
         gc.clearRect(0, 0, wall.getWidth(), wall.getHeight());
         Paint woods = new Color(0, 1, 0, 0.2);
@@ -210,6 +222,7 @@ public class WalkingSimScene extends BaseScene {
         ArrayList<Walker> toBeRemoved = new ArrayList<>();
         ArrayList<FirstTestTower> towersReadyToAttack = new ArrayList<>();
         ArrayList<FirstTestTower> notReadyToAttackAnyMore = new ArrayList<>();
+        ArrayList<EmptyTowerPlace> toBeRemovedTowerPlaces = new ArrayList<>();
         AnimationTimer animator = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -220,6 +233,18 @@ public class WalkingSimScene extends BaseScene {
                         toBeRemoved.add(walker);
                     }
 
+                }
+                for (EmptyTowerPlace towerPlace : towerPlaces) {
+                    int st = 0;
+                    if (towerPlace.isClicked != -1) {
+                        towers.add(new FirstTestTower(towerPlace.position, 40, Color.OLIVE, Color.INDIGO, 150, 5, 20));
+                        toBeRemovedTowerPlaces.add(towerPlace);
+                    }
+                    towerPlace.update(gc);
+
+                }
+                for (EmptyTowerPlace toBeRemovedTowerPlace : toBeRemovedTowerPlaces) {
+                    towerPlaces.remove(toBeRemovedTowerPlace);
                 }
                 for (FirstTestTower tower : towers) {
 //                    if (tower.isClicked) {
@@ -256,10 +281,11 @@ public class WalkingSimScene extends BaseScene {
                 for (FirstTestTower firstTestTower : notReadyToAttackAnyMore) {
                     towersReadyToAttack.remove(firstTestTower);
                 }
-                
+
                 for (Walker walker : toBeRemoved) {
                     walkers.remove(walker);
                 }
+
 //                if (clickedTowerIndex != -1) {
 //                    towers.
 //                }
@@ -275,10 +301,11 @@ public class WalkingSimScene extends BaseScene {
 
     private void makeTowerList() {
         towers = new ArrayList<>();
+        towerPlaces = new ArrayList<>();
         road = new RouteTile(ROUTE, StaticThings.generateFirstTowerPlaces());
         for (Point towerPlace : road.getTowerPlaces()) {
-//            towers.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
-            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 150, 5, 25));
+            towerPlaces.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
+//            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 150, 5, 25));
         }
 
     }

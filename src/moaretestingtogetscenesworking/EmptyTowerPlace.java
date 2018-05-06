@@ -32,16 +32,17 @@ public class EmptyTowerPlace extends BaseTower {
 
     }
 
+//    @Override
 //    protected boolean isClickHere(Point click) {
 //        double aa = click.distance(position);
 //        boolean returnValue = false;
 //        if (aa < (size / 2) + 5) {
 //            returnValue = true;
-//            isClicked = true;
+//            isClicked = 1;
 //        }
 //        return returnValue;
 //    }
-//
+
 //    protected boolean isIsClicked() {
 //        return isClicked;
 //    }
@@ -50,6 +51,8 @@ public class EmptyTowerPlace extends BaseTower {
     public void update(GraphicsContext gc) {
         if (isClicked != -1) {
             inside = Color.CHARTREUSE;
+//            System.out.println("APUAA!");
+//            this = new FirstTestTower(position, 40, Color.OLIVE, Color.INDIGO, 150, 5, 25);
         }
         gc.setFill(inside);
         gc.fillOval(position.x - (size / 2), position.y - (size / 2), size, size);
