@@ -276,7 +276,7 @@ public class WalkingSimScene extends BaseScene {
         road = new RouteTile(ROUTE, StaticThings.generateFirstTowerPlaces());
         for (Point towerPlace : road.getTowerPlaces()) {
 //            towers.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
-            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 500, 1.3, 2));
+            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 500, 1.3, 25));
         }
 
     }

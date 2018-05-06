@@ -49,14 +49,11 @@ public abstract class BaseTower implements Updatable {
         this.insideRange = Color.RED.deriveColor(1, 1, 1, 0.2);
         this.outsideRange = Color.BLACK;
         this.targetsOnRange = new ArrayList<>();
-//        midInit();
+        midInit();
     }
 
     @Override
-    public void update(GraphicsContext gc) {
-//        doAttackTime(attackCollector);
-//        System.out.println("DDDD");
-    }
+    public abstract void update(GraphicsContext gc);
 
     protected boolean isClickHere(Point click) {
         double aa = click.distance(position);
@@ -72,141 +69,53 @@ public abstract class BaseTower implements Updatable {
         return isClicked;
     }
 
-    /**
-     * TODO: adding targets in front of queue (somehow)
-     *
-     * @param target
-     * @return is target on range? Yes|No
-     */
-    protected boolean isTargetOnRange(Walker target) {
-        double dist = position.distance(target.getCurrPoint()) - target.getSize() - 2;
-        boolean isTargetOnRange = false;
-        if (dist <= range) {
-            isTargetOnRange = true;
-            if (!targetsOnRange.contains(target)) {
-                targetsOnRange.add(target);
-            }
-//            System.out.println("Enemy is on range!");
-            doAttackTime(attackCollector);
-        }
-        return isTargetOnRange;
+    private TreeSet<Walker> targetList2;
+    private double attackReadyLimit;
+    private double attackTime2;
+    private double collectedAttack;
+
+    private void midInit() {
+        targetList2 = new TreeSet<>();
+        attackReadyLimit = 50;
+        attackTime2 = 1;
+        collectedAttack = 0;
     }
 
-//    protected void removeTargetFromQueue(Walker target) {
-//        targetsOnRange.remove(target);
-//    }
-    private double attackCollectorLimit = 5;
-    private ArrayList<Integer> deadOnStart = new ArrayList<>();
+    public boolean isReadyToAttack() {
+        if (collectedAttack <= attackReadyLimit) {
+            collectedAttack += attackTime2;
+        }
+        return collectedAttack > attackReadyLimit;
+    }
 
-    /**
-     * TODO: rename it to something more sensible
-     *
-     * @param collected
-     */
-    private void doAttackTime(Double collected) {
-//        double holder = attackCollector;
-//        holder += attackTime;
-        collected = Math.max(collected, attackCollector);
-        collected += attackTime;
-        attackCollector = collected;
-//        System.out.println("Here?");
-        System.out.println("attCol:" + collected);
-        if (collected >= 5) {
-//            System.out.println("Nope");
-            if (targetsOnRange.size() > 0) {
-//                System.out.println("Will you ");
-                boolean isAlive = targetsOnRange.get(0).dealDamageToThis(attackDamage);
-                if (!isAlive) {
-                    targetsOnRange.remove(0);
-//                    System.out.println("DIE!");
-                }
-                attackCollector %= attackCollectorLimit;
+    public void addTarget(Walker walker) {
+        targetList2.add(walker);
+    }
 
-            } else {
-//                System.out.println("Bombs!");
-                attackCollector = attackCollectorLimit - attackTime;
-            }
+    public void removeTarget(Walker walker) {
+        try {
+            targetList2.remove(walker);
+        } catch (Exception e) {
         }
     }
 
-    protected void doAttackTimeStupid() {
-//        double holder = attackCollector;
-//        holder += attackTime;
-//        attackCollector += attackTime;
-        deadOnStart.add(1);
-//        System.out.println("Here?");
-//        System.out.println("attCol:" + attackCollector);
-        System.out.println("WTF?");
-        if (deadOnStart.size() > 5) {
-//            System.out.println("Nope");
-            if (targetsOnRange.size() > 0) {
-//                System.out.println("Will you ");
-                boolean isAlive = targetsOnRange.get(0).dealDamageToThis(attackDamage);
-                if (!isAlive) {
-                    targetsOnRange.remove(0);
-//                    System.out.println("DIE!");
-                }
-//                attackCollector %= attackCollectorLimit;
-                deadOnStart = new ArrayList<>();
-
-            } else {
-                while (deadOnStart.size() >= 5) {
-                    deadOnStart.remove(deadOnStart.size() - 1);
-                }
-//                System.out.println("Bombs!");
-//                attackCollector = attackCollectorLimit - attackTime;
+    public Walker attack() {
+        try {
+            Walker target = targetList2.first();
+            target.dealDamageToThis(attackDamage);
+            collectedAttack -= attackReadyLimit;
+            if (!target.isAlive()) {
+                targetList2.remove(target);
+                return target;
             }
+        } catch (Exception e) {
         }
+
+        return null;
     }
 
-//    private TreeSet<Walker> targetList2;
-//    private double attackReadyLimit;
-//    private double attackTime2;
-//    private double collectedAttack;
-//
-//    private void midInit() {
-//        targetList2 = new TreeSet<>();
-//        attackReadyLimit = 5;
-//        attackTime2 = 1;
-//        collectedAttack = 0;
-//    }
-//
-//    public boolean isReadyToAttack() {
-//        collectedAttack += attackTime2;
-//        if (collectedAttack > attackReadyLimit) {
-////            collectedAttack %= attackReadyLimit;
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public void addTarget(Walker walker) {
-//        targetList2.add(walker);
-//    }
-//
-//    public void removeTarget(Walker walker) {
-//        try {
-//            targetList2.remove(walker);
-//        } catch (Exception e) {
-//        }
-//    }
-//
-//    public Walker attack() {
-//        Walker target = targetList2.first();
-//        target.dealDamageToThis(attackDamage);
-//        collectedAttack -= attackReadyLimit;
-//        if (!target.isAlive()) {
-//            return target;
-//        }
-//        return null;
-//    }
-//
-////    public Walker getCurrentTarget(){
-////        return targetList2.first();
-////    }
-////    
-//    public boolean isTargetOnRange2(Walker target) {
-//        double dist = position.distance(target.getCurrPoint()) + target.getSize() + 2;
-//        return dist <= range;
-//    }
+    public boolean isTargetOnRange2(Walker target) {
+        double dist = position.distance(target.getCurrPoint()) + target.getSize() + 2;
+        return dist <= range;
+    }
 }
