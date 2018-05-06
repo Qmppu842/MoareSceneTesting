@@ -106,6 +106,7 @@ public class WalkingSimScene extends BaseScene {
             boolean asdd = towers.get(i).isClickHere(click);
             if (asdd) {
 //                clickedTowerIndex = i;
+//tower.
                 break;
             }
         }
@@ -157,7 +158,7 @@ public class WalkingSimScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                walkers.add(new Walker(-1, null, -1, -1, ROUTE, "" + walkers.size()));
+                walkers.add(new Walker(1, null, -1, -1, ROUTE, "" + walkers.size()));
 
 //                footer.getChildren().add(dealDamageToCertain(walkers.size() - 1));
             }
@@ -270,13 +271,14 @@ public class WalkingSimScene extends BaseScene {
 
     private ArrayList<FirstTestTower> towers;
     private RouteTile road;
+    private ArrayList<EmptyTowerPlace> towerPlaces;
 
     private void makeTowerList() {
         towers = new ArrayList<>();
         road = new RouteTile(ROUTE, StaticThings.generateFirstTowerPlaces());
         for (Point towerPlace : road.getTowerPlaces()) {
 //            towers.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
-            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 500, 1.3, 25));
+            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 150, 5, 25));
         }
 
     }

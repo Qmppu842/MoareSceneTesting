@@ -1,10 +1,8 @@
 package moaretestingtogetscenesworking;
 
 import java.awt.Point;
-import java.awt.Robot;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 /**
  *
@@ -50,7 +48,7 @@ public class EmptyTowerPlace extends BaseTower {
 
     @Override
     public void update(GraphicsContext gc) {
-        if (isClicked) {
+        if (isClicked != -1) {
             inside = Color.CHARTREUSE;
         }
         gc.setFill(inside);

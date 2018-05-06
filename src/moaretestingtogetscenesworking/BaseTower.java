@@ -18,7 +18,7 @@ public abstract class BaseTower implements Updatable {
     protected int size;
     protected Color outside;
     protected Color inside;
-    protected boolean isClicked;
+    protected int isClicked;
 
     protected int range;
     private double attackTime;
@@ -33,7 +33,7 @@ public abstract class BaseTower implements Updatable {
         this.size = size;
         this.outside = outside;
         this.inside = inside;
-        this.isClicked = false;
+        this.isClicked = -1;
     }
 
     public BaseTower(Point position, int size, Color outside, Color inside, int range, double attackTime, int attackDamage) {
@@ -41,7 +41,7 @@ public abstract class BaseTower implements Updatable {
         this.size = size;
         this.outside = outside;
         this.inside = inside;
-        this.isClicked = false;
+        this.isClicked = -1;
         this.range = range;
         this.attackTime = attackTime;
 //        this.attackCollector = 0;
@@ -60,15 +60,16 @@ public abstract class BaseTower implements Updatable {
         boolean returnValue = false;
         if (aa < (size / 2) + 5) {
             returnValue = true;
-            isClicked = true;
+            isClicked = 1;
         }
         return returnValue;
     }
 
-    protected boolean isIsClicked() {
+    protected int isIsClicked() {
         return isClicked;
     }
 
+    //TODO: add these to constructor
     private TreeSet<Walker> targetList2;
     private double attackReadyLimit;
     private double attackTime2;

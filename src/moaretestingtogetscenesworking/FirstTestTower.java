@@ -6,7 +6,6 @@
 package moaretestingtogetscenesworking;
 
 import java.awt.Point;
-import java.util.TreeSet;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -71,8 +70,14 @@ public class FirstTestTower extends BaseTower {
 
     @Override
     public void update(GraphicsContext gc) {
+        if (isClicked != -1) {
         gc.setFill(insideRange);
         gc.fillOval(position.x - (range / 1), position.y - (range / 1), range * 2, range * 2);
+         isClicked++;
+            if (isClicked >150) {
+                isClicked = -1;
+            }
+        }
         gc.setFill(inside);
         gc.fillPolygon(xPoints, yPoints, 16);
     }

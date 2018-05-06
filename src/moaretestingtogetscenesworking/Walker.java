@@ -115,7 +115,9 @@ public class Walker implements Updatable, Comparable<Walker> {
             }
             gc.setFill(color);
             gc.fillOval(currPoint.x - (size / 2), currPoint.y - (size / 2), size, size);
-            drawHPBar(gc);
+            if (currentHP != maxHP) {
+                drawHPBar(gc);
+            }
             x = currPoint.x;
             y = currPoint.y;
         }
@@ -143,7 +145,7 @@ public class Walker implements Updatable, Comparable<Walker> {
             scaledSize = 0;
         }
         gc.fillRect(currPoint.x - (size / 2), currPoint.y - (size / 2) - 10, scaledSize, 5);
-        
+
     }
 
     public Point getCurrPoint() {
@@ -153,14 +155,14 @@ public class Walker implements Updatable, Comparable<Walker> {
     public int getSize() {
         return size;
     }
-    
-    public boolean isAlive(){
-    return currentHP > 0;
+
+    public boolean isAlive() {
+        return currentHP > 0;
     }
 
     @Override
     public int compareTo(Walker t) {
-        
-    return this.ID - t.ID;  
+
+        return this.ID - t.ID;
     }
 }
