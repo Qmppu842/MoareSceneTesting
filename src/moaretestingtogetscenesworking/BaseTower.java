@@ -120,7 +120,7 @@ public abstract class BaseTower implements Updatable {
         }
     }
 
-    protected void doAttackTimeRetarted() {
+    protected void doAttackTimeStupid() {
 //        double holder = attackCollector;
 //        holder += attackTime;
 //        attackCollector += attackTime;

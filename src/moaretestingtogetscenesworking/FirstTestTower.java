@@ -79,7 +79,7 @@ public class FirstTestTower extends BaseTower {
         gc.fillPolygon(xPoints, yPoints, 16);
 //        150
 //        doAttackTime();
-//        doAttackTimeRetarted();
+//        doAttackTimeStupid();
         doAttackTime();
 //        gc.strokeOval(size, size, size, size);
     }
