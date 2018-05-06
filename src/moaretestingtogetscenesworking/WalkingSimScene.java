@@ -207,6 +207,8 @@ public class WalkingSimScene extends BaseScene {
 
     private AnimationTimer generateAnimator() {
         ArrayList<Walker> toBeRemoved = new ArrayList<>();
+        ArrayList<FirstTestTower> towersReadyToAttack = new ArrayList<>();
+        ArrayList<FirstTestTower> notReadyToAttackAnyMore = new ArrayList<>();
         AnimationTimer animator = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -218,18 +220,42 @@ public class WalkingSimScene extends BaseScene {
                     }
 
                 }
-                for (BaseTower tower : towers) {
-                    if (tower.isClicked) {
-//                        TODO: Fix attackTimes under 1
-                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside, 500, 1.3, 2);
-//               tower.position, tower.size, tower.inside, tower.outside
+                for (FirstTestTower tower : towers) {
+//                    if (tower.isClicked) {
+////                        TODO: Fix attackTimes under 1
+//                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside, 500, 1.3, 2);
+////               tower.position, tower.size, tower.inside, tower.outside
+//                    }
+//                    for (Walker walker : walkers) {
+//                        tower.isTargetOnRange(walker);
+//                    }
+                    boolean attackReadyness = tower.isReadyToAttack();
+                    if (attackReadyness) {
+                        towersReadyToAttack.add(tower);
                     }
                     for (Walker walker : walkers) {
-                        tower.isTargetOnRange((Walker) walker);
+                        boolean asd = tower.isTargetOnRange2(walker);
+                        if (asd) {
+                            tower.addTarget(walker);
+                        } else {
+                            tower.removeTarget(walker);
+                        }
                     }
+
                     tower.update(gc);
                 }
 
+                for (FirstTestTower baseTower : towersReadyToAttack) {
+                    Walker target = baseTower.attack();
+                    notReadyToAttackAnyMore.add(baseTower);
+                    if (target != null) {
+                        toBeRemoved.add(target);
+                    }
+                }
+                for (FirstTestTower firstTestTower : notReadyToAttackAnyMore) {
+                    towersReadyToAttack.remove(firstTestTower);
+                }
+                
                 for (Walker walker : toBeRemoved) {
                     walkers.remove(walker);
                 }
@@ -242,14 +268,15 @@ public class WalkingSimScene extends BaseScene {
         return animator;
     }
 
-    private ArrayList<BaseTower> towers;
+    private ArrayList<FirstTestTower> towers;
     private RouteTile road;
 
     private void makeTowerList() {
         towers = new ArrayList<>();
         road = new RouteTile(ROUTE, StaticThings.generateFirstTowerPlaces());
         for (Point towerPlace : road.getTowerPlaces()) {
-            towers.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
+//            towers.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
+            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 500, 1.3, 2));
         }
 
     }

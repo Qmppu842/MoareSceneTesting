@@ -3,6 +3,8 @@ package moaretestingtogetscenesworking;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -19,12 +21,12 @@ public abstract class BaseTower implements Updatable {
     protected boolean isClicked;
 
     protected int range;
-    protected double attackTime;
-    protected double attackCollector = 0;
+    private double attackTime;
+    private double attackCollector = 0;
     protected int attackDamage;
     protected Color insideRange;
     protected Color outsideRange;
-    protected PriorityQueue<Walker> targetsOnRange;
+    protected ArrayList<Walker> targetsOnRange;
 
     public BaseTower(Point position, int size, Color outside, Color inside) {
         this.position = position;
@@ -46,11 +48,15 @@ public abstract class BaseTower implements Updatable {
         this.attackDamage = attackDamage;
         this.insideRange = Color.RED.deriveColor(1, 1, 1, 0.2);
         this.outsideRange = Color.BLACK;
-        this.targetsOnRange = new PriorityQueue<>();
+        this.targetsOnRange = new ArrayList<>();
+//        midInit();
     }
 
     @Override
-    public abstract void update(GraphicsContext gc);
+    public void update(GraphicsContext gc) {
+//        doAttackTime(attackCollector);
+//        System.out.println("DDDD");
+    }
 
     protected boolean isClickHere(Point click) {
         double aa = click.distance(position);
@@ -81,7 +87,7 @@ public abstract class BaseTower implements Updatable {
                 targetsOnRange.add(target);
             }
 //            System.out.println("Enemy is on range!");
-//            doAttackTime();
+            doAttackTime(attackCollector);
         }
         return isTargetOnRange;
     }
@@ -95,27 +101,30 @@ public abstract class BaseTower implements Updatable {
     /**
      * TODO: rename it to something more sensible
      *
+     * @param collected
      */
-    protected void doAttackTime() {
+    private void doAttackTime(Double collected) {
 //        double holder = attackCollector;
 //        holder += attackTime;
-        attackCollector += attackTime;
+        collected = Math.max(collected, attackCollector);
+        collected += attackTime;
+        attackCollector = collected;
 //        System.out.println("Here?");
-        System.out.println("attCol:" + attackCollector);
-        if (attackCollector >= 5) {
+        System.out.println("attCol:" + collected);
+        if (collected >= 5) {
 //            System.out.println("Nope");
             if (targetsOnRange.size() > 0) {
 //                System.out.println("Will you ");
-                boolean isAlive = targetsOnRange.peek().dealDamageToThis(attackDamage);
+                boolean isAlive = targetsOnRange.get(0).dealDamageToThis(attackDamage);
                 if (!isAlive) {
-                    targetsOnRange.remove();
+                    targetsOnRange.remove(0);
 //                    System.out.println("DIE!");
                 }
-//                attackCollector %= attackCollectorLimit;
+                attackCollector %= attackCollectorLimit;
 
             } else {
 //                System.out.println("Bombs!");
-//                attackCollector = attackCollectorLimit - attackTime;
+                attackCollector = attackCollectorLimit - attackTime;
             }
         }
     }
@@ -132,9 +141,9 @@ public abstract class BaseTower implements Updatable {
 //            System.out.println("Nope");
             if (targetsOnRange.size() > 0) {
 //                System.out.println("Will you ");
-                boolean isAlive = targetsOnRange.peek().dealDamageToThis(attackDamage);
+                boolean isAlive = targetsOnRange.get(0).dealDamageToThis(attackDamage);
                 if (!isAlive) {
-                    targetsOnRange.remove();
+                    targetsOnRange.remove(0);
 //                    System.out.println("DIE!");
                 }
 //                attackCollector %= attackCollectorLimit;
@@ -149,4 +158,55 @@ public abstract class BaseTower implements Updatable {
             }
         }
     }
+
+//    private TreeSet<Walker> targetList2;
+//    private double attackReadyLimit;
+//    private double attackTime2;
+//    private double collectedAttack;
+//
+//    private void midInit() {
+//        targetList2 = new TreeSet<>();
+//        attackReadyLimit = 5;
+//        attackTime2 = 1;
+//        collectedAttack = 0;
+//    }
+//
+//    public boolean isReadyToAttack() {
+//        collectedAttack += attackTime2;
+//        if (collectedAttack > attackReadyLimit) {
+////            collectedAttack %= attackReadyLimit;
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public void addTarget(Walker walker) {
+//        targetList2.add(walker);
+//    }
+//
+//    public void removeTarget(Walker walker) {
+//        try {
+//            targetList2.remove(walker);
+//        } catch (Exception e) {
+//        }
+//    }
+//
+//    public Walker attack() {
+//        Walker target = targetList2.first();
+//        target.dealDamageToThis(attackDamage);
+//        collectedAttack -= attackReadyLimit;
+//        if (!target.isAlive()) {
+//            return target;
+//        }
+//        return null;
+//    }
+//
+////    public Walker getCurrentTarget(){
+////        return targetList2.first();
+////    }
+////    
+//    public boolean isTargetOnRange2(Walker target) {
+//        double dist = position.distance(target.getCurrPoint()) + target.getSize() + 2;
+//        return dist <= range;
+//    }
 }

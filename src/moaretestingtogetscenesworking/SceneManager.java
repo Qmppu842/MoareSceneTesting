@@ -22,6 +22,7 @@ public class SceneManager {
     public SceneManager(Stage primeStage, Application app) {
         this.primeStage = primeStage;
         this.app = app;
+        this.primeStage.setMaximized(true);
         init();
     }
 
@@ -41,24 +42,28 @@ public class SceneManager {
                 break;
             case 2:
                 primeStage.setScene(getFastTableScene());
-                primeStage.setFullScreen(true);
+//                primeStage.setFullScreen(true);
                 break;
             case 3:
                 primeStage.setScene(getSlowTableScene());
-                primeStage.setFullScreen(true);
+//                primeStage.setFullScreen(true);
                 break;
             case 4:
                 primeStage.setScene(getNonTableScene());
                 primeStage.setFullScreenExitHint("Press powerbutton to escape me!");
-                primeStage.setFullScreen(true);
+//                primeStage.setFullScreen(true);
+                this.primeStage.setMaximized(true);
                 break;
             case 5:
+                this.primeStage.setMaximized(true);
                 primeStage.setScene(getWalkingSimScene());
                 primeStage.setFullScreen(true);
                 primeStage.setAlwaysOnTop(true);
                 break;
 
         }
+        
+        this.primeStage.setMaximized(true);
 
     }
 
