@@ -10,7 +10,7 @@ import javafx.scene.paint.Paint;
  *
  * @author Qmppu842
  */
-public class Walker implements Updatable {
+public class Walker implements Updatable, Comparable<Walker> {
 
     private double speed;
     private double speedCollector;
@@ -144,5 +144,23 @@ public class Walker implements Updatable {
         }
         gc.fillRect(currPoint.x - (size / 2), currPoint.y - (size / 2) - 10, scaledSize, 5);
         
+    }
+
+    public Point getCurrPoint() {
+        return currPoint;
+    }
+
+    public int getSize() {
+        return size;
+    }
+    
+    public boolean isAlive(){
+    return currentHP > 0;
+    }
+
+    @Override
+    public int compareTo(Walker t) {
+        
+    return this.ID - t.ID;  
     }
 }

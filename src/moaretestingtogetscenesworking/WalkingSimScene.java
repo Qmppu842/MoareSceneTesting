@@ -28,7 +28,7 @@ public class WalkingSimScene extends BaseScene {
     private Canvas wall;
     private GraphicsContext gc;
     private final ArrayList<Point> ROUTE;
-    private ArrayList<Updatable> walkers;
+    private ArrayList<Walker> walkers;
 
     public WalkingSimScene(SceneManager mgr, String buttonText) {
         super(mgr, buttonText);
@@ -206,19 +206,32 @@ public class WalkingSimScene extends BaseScene {
     }
 
     private AnimationTimer generateAnimator() {
-
+        ArrayList<Walker> toBeRemoved = new ArrayList<>();
         AnimationTimer animator = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 drawRoute();
-                for (Updatable walker : walkers) {
+                for (Walker walker : walkers) {
                     walker.update(gc);
+                    if (!walker.isAlive()) {
+                        toBeRemoved.add(walker);
+                    }
+
                 }
                 for (BaseTower tower : towers) {
                     if (tower.isClicked) {
-                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside);
+//                        TODO: Fix attackTimes under 1
+                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside, 150, 1.3, 2);
+//               tower.position, tower.size, tower.inside, tower.outside
+                    }
+                    for (Walker walker : walkers) {
+                        tower.isTargetOnRange((Walker) walker);
                     }
                     tower.update(gc);
+                }
+
+                for (Walker walker : toBeRemoved) {
+                    walkers.remove(walker);
                 }
 //                if (clickedTowerIndex != -1) {
 //                    towers.
