@@ -3,11 +3,9 @@ package moaretestingtogetscenesworking;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
-import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
-import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -55,6 +53,7 @@ public class WalkingSimScene extends BaseScene {
         this.logic = logic;
         ROUTE = StaticThings.generateFirstTestRoute();
         walkers = new ArrayList<>();
+        goldInit();
         wall = new Canvas(1500, 900);
         gc = wall.getGraphicsContext2D();
         allThings.setCenter(wall);
@@ -70,7 +69,7 @@ public class WalkingSimScene extends BaseScene {
          * TODO: Yes implement this because now it is total insanity to try to
          * get hovering and other normal mouse events to even barely work. <br>
          * This seems already super demanding... if it ends bottle necking, it
-         * is probably then better implement layout that overlaps canvas and
+         * is probably better implement layout that overlaps canvas and
          * then add clickable-shapes to it and position then correctly
          * somehow...
          */
@@ -123,7 +122,7 @@ public class WalkingSimScene extends BaseScene {
             }
         }
     }
-    
+
     private void drawRoute() {
         gc.clearRect(0, 0, wall.getWidth(), wall.getHeight());
         Paint woods = new Color(0, 1, 0, 0.2);
@@ -226,6 +225,7 @@ public class WalkingSimScene extends BaseScene {
         AnimationTimer animator = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                mineGold();
                 drawRoute();
                 for (Walker walker : walkers) {
                     walker.update(gc);
@@ -235,26 +235,22 @@ public class WalkingSimScene extends BaseScene {
 
                 }
                 for (EmptyTowerPlace towerPlace : towerPlaces) {
-                    int st = 0;
-                    if (towerPlace.isClicked != -1) {
+                    if (towerPlace.isClicked != -1 && wannabeGold >= 25) {
                         towers.add(new FirstTestTower(towerPlace.position, 40, Color.OLIVE, Color.INDIGO, 150, 5, 20));
                         toBeRemovedTowerPlaces.add(towerPlace);
+                        wannabeGold -= 25;
+                    } else if (towerPlace.isClicked != -1 && wannabeGold < 25) {
+                        System.out.println("Not enough gold!!");
+                        towerPlace.isClicked = -1;
                     }
                     towerPlace.update(gc);
 
                 }
+
                 for (EmptyTowerPlace toBeRemovedTowerPlace : toBeRemovedTowerPlaces) {
                     towerPlaces.remove(toBeRemovedTowerPlace);
                 }
                 for (FirstTestTower tower : towers) {
-//                    if (tower.isClicked) {
-////                        TODO: Fix attackTimes under 1
-//                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside, 500, 1.3, 2);
-////               tower.position, tower.size, tower.inside, tower.outside
-//                    }
-//                    for (Walker walker : walkers) {
-//                        tower.isTargetOnRange(walker);
-//                    }
                     boolean attackReadyness = tower.isReadyToAttack();
                     if (attackReadyness) {
                         towersReadyToAttack.add(tower);
@@ -284,16 +280,19 @@ public class WalkingSimScene extends BaseScene {
 
                 for (Walker walker : toBeRemoved) {
                     walkers.remove(walker);
+                    if (!walkerBountyBoard.contains(walker)) {
+                        walkerBountyBoard.add(walker);
+                        wannabeGold += 5;
+                    }
                 }
 
-//                if (clickedTowerIndex != -1) {
-//                    towers.
-//                }
             }
         };
 
         return animator;
     }
+
+    private ArrayList<Walker> walkerBountyBoard;
 
     private ArrayList<FirstTestTower> towers;
     private RouteTile road;
@@ -302,11 +301,33 @@ public class WalkingSimScene extends BaseScene {
     private void makeTowerList() {
         towers = new ArrayList<>();
         towerPlaces = new ArrayList<>();
+        walkerBountyBoard = new ArrayList<>();
         road = new RouteTile(ROUTE, StaticThings.generateFirstTowerPlaces());
         for (Point towerPlace : road.getTowerPlaces()) {
             towerPlaces.add(new EmptyTowerPlace(towerPlace, 40, Color.OLIVE, Color.INDIGO));
 //            towers.add(new FirstTestTower(towerPlace, 40, Color.OLIVE, Color.INDIGO, 150, 5, 25));
         }
-
     }
+
+    private int wannabeGold;
+    private double goldCollector;
+    private double goldFindLimit;
+    private double goldRate;
+
+    private void goldInit() {
+        wannabeGold = 25;
+        goldCollector = 0;
+        goldFindLimit = 1000;
+        goldRate = 10;
+    }
+
+    private void mineGold() {
+        goldCollector += goldRate;
+        if (goldCollector > goldFindLimit) {
+            wannabeGold++;
+            goldCollector -= goldFindLimit;
+            System.out.println("Goldd!!! " + wannabeGold);
+        }
+    }
+
 }
