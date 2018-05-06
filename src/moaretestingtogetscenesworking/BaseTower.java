@@ -1,6 +1,7 @@
 package moaretestingtogetscenesworking;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -19,7 +20,7 @@ public abstract class BaseTower implements Updatable {
 
     protected int range;
     protected double attackTime;
-    private double attackCollector;
+    protected double attackCollector = 0;
     protected int attackDamage;
     protected Color insideRange;
     protected Color outsideRange;
@@ -41,7 +42,7 @@ public abstract class BaseTower implements Updatable {
         this.isClicked = false;
         this.range = range;
         this.attackTime = attackTime;
-        this.attackCollector = 0;
+//        this.attackCollector = 0;
         this.attackDamage = attackDamage;
         this.insideRange = Color.RED.deriveColor(1, 1, 1, 0.2);
         this.outsideRange = Color.BLACK;
@@ -88,17 +89,20 @@ public abstract class BaseTower implements Updatable {
 //    protected void removeTargetFromQueue(Walker target) {
 //        targetsOnRange.remove(target);
 //    }
-    
-    
+    private double attackCollectorLimit = 5;
+    private ArrayList<Integer> deadOnStart = new ArrayList<>();
+
     /**
      * TODO: rename it to something more sensible
      *
      */
     protected void doAttackTime() {
-        attackCollector = (attackCollector + attackTime);
+//        double holder = attackCollector;
+//        holder += attackTime;
+        attackCollector += attackTime;
 //        System.out.println("Here?");
-//        System.out.println("attCol:" + attackCollector);
-        if (attackCollector >= 1) {
+        System.out.println("attCol:" + attackCollector);
+        if (attackCollector >= 5) {
 //            System.out.println("Nope");
             if (targetsOnRange.size() > 0) {
 //                System.out.println("Will you ");
@@ -107,11 +111,41 @@ public abstract class BaseTower implements Updatable {
                     targetsOnRange.remove();
 //                    System.out.println("DIE!");
                 }
-                attackCollector %= 1;
+//                attackCollector %= attackCollectorLimit;
 
             } else {
 //                System.out.println("Bombs!");
-                attackCollector = 1 - attackTime;
+//                attackCollector = attackCollectorLimit - attackTime;
+            }
+        }
+    }
+
+    protected void doAttackTimeRetarted() {
+//        double holder = attackCollector;
+//        holder += attackTime;
+//        attackCollector += attackTime;
+        deadOnStart.add(1);
+//        System.out.println("Here?");
+//        System.out.println("attCol:" + attackCollector);
+        System.out.println("WTF?");
+        if (deadOnStart.size() > 5) {
+//            System.out.println("Nope");
+            if (targetsOnRange.size() > 0) {
+//                System.out.println("Will you ");
+                boolean isAlive = targetsOnRange.peek().dealDamageToThis(attackDamage);
+                if (!isAlive) {
+                    targetsOnRange.remove();
+//                    System.out.println("DIE!");
+                }
+//                attackCollector %= attackCollectorLimit;
+                deadOnStart = new ArrayList<>();
+
+            } else {
+                while (deadOnStart.size() >= 5) {
+                    deadOnStart.remove(deadOnStart.size() - 1);
+                }
+//                System.out.println("Bombs!");
+//                attackCollector = attackCollectorLimit - attackTime;
             }
         }
     }

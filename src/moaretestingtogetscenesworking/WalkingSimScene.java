@@ -221,7 +221,7 @@ public class WalkingSimScene extends BaseScene {
                 for (BaseTower tower : towers) {
                     if (tower.isClicked) {
 //                        TODO: Fix attackTimes under 1
-                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside, 150, 1.3, 2);
+                        tower = new FirstTestTower(tower.position, tower.size, tower.inside, tower.outside, 500, 1.3, 2);
 //               tower.position, tower.size, tower.inside, tower.outside
                     }
                     for (Walker walker : walkers) {

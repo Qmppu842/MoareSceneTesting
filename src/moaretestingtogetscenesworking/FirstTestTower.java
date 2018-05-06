@@ -23,8 +23,6 @@ public class FirstTestTower extends BaseTower {
         initShape();
     }
 
-
-
 //    public FirstTestTower(Point position, int size, Color outside, Color inside) {
 //        super(position, size, outside, inside);
 //        initShape();
@@ -76,12 +74,39 @@ public class FirstTestTower extends BaseTower {
     @Override
     public void update(GraphicsContext gc) {
         gc.setFill(insideRange);
-        gc.fillOval(position.x - (range / 1), position.y - (range / 1), range*2, range*2);
+        gc.fillOval(position.x - (range / 1), position.y - (range / 1), range * 2, range * 2);
         gc.setFill(inside);
         gc.fillPolygon(xPoints, yPoints, 16);
 //        150
+//        doAttackTime();
+//        doAttackTimeRetarted();
         doAttackTime();
 //        gc.strokeOval(size, size, size, size);
+    }
+    
+    @Override
+     protected void doAttackTime() {
+//        double holder = attackCollector;
+//        holder += attackTime;
+        attackCollector += attackTime;
+//        System.out.println("Here?");
+        System.out.println("attCol:" + attackCollector);
+        if (attackCollector >= 5) {
+//            System.out.println("Nope");
+            if (targetsOnRange.size() > 0) {
+//                System.out.println("Will you ");
+                boolean isAlive = targetsOnRange.peek().dealDamageToThis(attackDamage);
+                if (!isAlive) {
+                    targetsOnRange.remove();
+//                    System.out.println("DIE!");
+                }
+//                attackCollector %= attackCollectorLimit;
+
+            } else {
+//                System.out.println("Bombs!");
+//                attackCollector = attackCollectorLimit - attackTime;
+            }
+        }
     }
 
 }
