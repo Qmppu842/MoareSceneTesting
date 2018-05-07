@@ -192,13 +192,13 @@ public class Walker implements Updatable, Comparable<Walker> {
 
     private void scaleSpeedToCurrentHP() {
         if (currentHP < maxHP * 0.15) {
-            speed = speedOriginal * 2;
+            speed = speedOriginal * 2.5;
         } else if (currentHP < maxHP * 0.25) {
-            speed = speedOriginal * 1.5;
+            speed = speedOriginal * 1.75;
         } else if (currentHP < maxHP * 0.5) {
-            speed = speedOriginal * 1.25;
+            speed = speedOriginal * 1.5;
         } else if (currentHP < maxHP * 0.75) {
-            speed = speedOriginal * 1.1;
+            speed = speedOriginal * 1.25;
         }
     }
 

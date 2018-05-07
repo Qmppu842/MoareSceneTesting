@@ -24,6 +24,23 @@ public class FirstTestTower extends BaseTower {
 
     }
 
+//    public FirstTestTower(int size, Color outside, Color inside, int range, int attackDamage, double attackTime2, double collectedAttack) {
+//        super(size, outside, inside, range, attackDamage, attackTime2, collectedAttack);
+////        initShape();
+//        shaped = false;
+//    }
+    public FirstTestTower(int size, Color outside, Color inside, int range, int attackDamage, double attackTime2, double attackReadyLimit) {
+        super(size, outside, inside, range, attackDamage, attackTime2, attackReadyLimit);
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        super.setPosition(position);
+        initShape();
+//        shaped = true;
+    }
+//    private boolean shaped;
+
     private void initShape() {
         double half = size / 2.0;
         double quater = size / 4.0;
@@ -70,15 +87,19 @@ public class FirstTestTower extends BaseTower {
 
     @Override
     public void update(GraphicsContext gc) {
+//        if (shaped) {
+
         if (isClicked != -1) {
-        gc.setFill(insideRange);
-        gc.fillOval(position.x - (range / 1), position.y - (range / 1), range * 2, range * 2);
-         isClicked++;
-            if (isClicked >150) {
+            gc.setFill(insideRange);
+            gc.fillOval(position.x - (range / 1), position.y - (range / 1), range * 2, range * 2);
+            isClicked++;
+            if (isClicked > 150) {
                 isClicked = -1;
             }
         }
         gc.setFill(inside);
         gc.fillPolygon(xPoints, yPoints, 16);
     }
+//    }
+
 }

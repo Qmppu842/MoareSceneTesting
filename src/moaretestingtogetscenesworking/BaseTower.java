@@ -28,6 +28,7 @@ public abstract class BaseTower implements Updatable {
     protected Color outsideRange;
     protected ArrayList<Walker> targetsOnRange;
 
+    @Deprecated
     public BaseTower(Point position, int size, Color outside, Color inside) {
         this.position = position;
         this.size = size;
@@ -36,6 +37,7 @@ public abstract class BaseTower implements Updatable {
         this.isClicked = -1;
     }
 
+    @Deprecated
     public BaseTower(Point position, int size, Color outside, Color inside, int range, double attackTime, int attackDamage) {
         this.position = position;
         this.size = size;
@@ -50,6 +52,26 @@ public abstract class BaseTower implements Updatable {
         this.outsideRange = Color.BLACK;
         this.targetsOnRange = new ArrayList<>();
         midInit();
+    }
+
+    public BaseTower(int size, Color outside, Color inside, int range, int attackDamage, double attackTime2, double attackReadyLimit) {
+        this.size = size;
+        this.outside = outside;
+        this.inside = inside;
+         this.isClicked = -1;
+        this.range = range;
+        this.attackDamage = attackDamage;
+        this.insideRange = Color.RED.deriveColor(1, 1, 1, 0.2);
+        this.outsideRange = Color.BLACK;
+        this.attackTime2 = attackTime2;
+        this.collectedAttack = 0;
+        this.targetList2 = new TreeSet<>();
+        this.attackReadyLimit = attackReadyLimit;
+        
+        
+//    private double attackReadyLimit;
+//    private double attackTime2;
+//    private double collectedAttack;
     }
 
     public void setPosition(Point position) {
@@ -81,8 +103,8 @@ public abstract class BaseTower implements Updatable {
 
     private void midInit() {
         targetList2 = new TreeSet<>();
-        attackReadyLimit = 5;
-        attackTime2 = 1;
+        attackReadyLimit = 100;
+        attackTime2 = 10;
         collectedAttack = 0;
     }
 

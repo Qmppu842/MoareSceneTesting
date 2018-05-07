@@ -63,7 +63,13 @@ public class WalkingSimScene extends BaseScene {
 
         footer.getChildren().add(toggleWalkingBalls(animator));
         footer.getChildren().add(newWalker());
-        footer.getChildren().add(dealDamageToCertain());
+//        footer.getChildren().add(dealDamageToCertain());
+        footer.getChildren().add(onlyBuildBasics());
+        footer.getChildren().add(onlyBuildBeams());
+        footer.getChildren().add(onlyBuildCannons());
+        footer.getChildren().add(onlyBuildSnipers());
+        footer.getChildren().add(onlyBuildSniperBeams());
+        footer.getChildren().add(onlyBuildRandoms());
 
         /*
          * TODO: Yes implement this because now it is total insanity to try to
@@ -97,6 +103,7 @@ public class WalkingSimScene extends BaseScene {
 //            System.out.println("wallX: " + wallX);
 //            System.out.println("wallY: " + wallY);
         });
+        initTowerTypes();
 
     }
 //    private int clickedTowerIndex;
@@ -169,10 +176,10 @@ public class WalkingSimScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Walker walk = new Walker(1, null, -1, -1, ROUTE, "" + walkers.size());
+                Walker walk = new Walker(1, null, 1000, -1, ROUTE, "" + walkers.size());
                 walkers.add(walk);
                 Random ran = new Random();
-                if (ran.nextDouble() >0.8) {
+                if (ran.nextDouble() > 0.8) {
                     walk.setSpeedScaleWithHP(true);
                 }
 //                footer.getChildren().add(dealDamageToCertain(walkers.size() - 1));
@@ -182,6 +189,72 @@ public class WalkingSimScene extends BaseScene {
         return coreButtonMaker("New walker.", action);
     }
 
+    private Button onlyBuildSnipers() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                towerMode = "Sniper";
+            }
+        };
+
+        return coreButtonMaker("Build Snipers.", action);
+    }
+
+    private Button onlyBuildBasics() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                towerMode = "Basic";
+            }
+        };
+        return coreButtonMaker("Build Basics.", action);
+    }
+
+    private Button onlyBuildCannons() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                towerMode = "Cannon";
+            }
+        };
+
+        return coreButtonMaker("Build Cannons.", action);
+    }
+
+    private Button onlyBuildBeams() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                towerMode = "Beam";
+            }
+        };
+
+        return coreButtonMaker("Build Beams.", action);
+    }
+
+    private Button onlyBuildSniperBeams() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                towerMode = "SniperBeam";
+            }
+        };
+
+        return coreButtonMaker("Build SniperBeams.", action);
+    }
+
+    private Button onlyBuildRandoms() {
+        EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                towerMode = "Random";
+            }
+        };
+
+        return coreButtonMaker("Build Random towers?.", action);
+    }
+
+    @Deprecated
     private Button dealDamageToCertain() {
 //        boolean isAlive = true;
 //        Button btn = new Button();
@@ -226,6 +299,7 @@ public class WalkingSimScene extends BaseScene {
         ArrayList<FirstTestTower> towersReadyToAttack = new ArrayList<>();
         ArrayList<FirstTestTower> notReadyToAttackAnyMore = new ArrayList<>();
         ArrayList<EmptyTowerPlace> toBeRemovedTowerPlaces = new ArrayList<>();
+        Random ran = new Random();
         AnimationTimer animator = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -240,7 +314,20 @@ public class WalkingSimScene extends BaseScene {
                 }
                 for (EmptyTowerPlace towerPlace : towerPlaces) {
                     if (towerPlace.isClicked != -1 && wannabeGold >= 25) {
-                        towers.add(new FirstTestTower(towerPlace.position, 40, Color.OLIVE, Color.INDIGO, 150, 1.3, 2));
+
+//                        towers.add(new FirstTestTower(towerPlace.position, 40, Color.OLIVE, Color.INDIGO, 150, 1.3, 2));
+                        FirstTestTower tow = null;
+                        switch (towerMode) {
+                            case "Random":
+                                tow = thingMaybe(towerTypes.get(ran.nextInt(towerTypes.size())));
+                                break;
+                            default:
+                                tow = thingMaybe(towerMode);
+                                break;
+                        }
+
+                        tow.setPosition(towerPlace.position);
+                        towers.add(tow);
                         toBeRemovedTowerPlaces.add(towerPlace);
                         wannabeGold -= 25;
                     } else if (towerPlace.isClicked != -1 && wannabeGold < 25) {
@@ -334,4 +421,98 @@ public class WalkingSimScene extends BaseScene {
         }
     }
 
+    private ArrayList<String> towerTypes;
+    private String towerMode;
+
+    private void initTowerTypes() {
+        towerMode = "Random";
+        towerTypes = new ArrayList<>();
+//        DifferentTowers basic = DifferentTowers.BASIC;
+//         DifferentTowers beam = DifferentTowers.BEAM;
+//          DifferentTowers cannon = DifferentTowers.CANNON;
+//           DifferentTowers sniper = DifferentTowers.SNIPER;
+//            DifferentTowers sb = DifferentTowers.SNIPERBEAM;
+//        towerTypes.add(basic.getTower());
+//        towerTypes.add(beam.getTower());
+//        towerTypes.add(cannon.getTower());
+//        towerTypes.add(sniper.getTower());
+//        towerTypes.add(sb.getTower());
+//        towerTypes.add(thingMaybe("Basic"));
+//        towerTypes.add(thingMaybe("Beam"));
+//        towerTypes.add(thingMaybe("Cannon"));
+//        towerTypes.add(thingMaybe("Sniper"));
+//        towerTypes.add(thingMaybe("SniperBeam"));
+
+        towerTypes.add("Basic");
+        towerTypes.add("Beam");
+        towerTypes.add("Cannon");
+        towerTypes.add("Sniper");
+        towerTypes.add("SniperBeam");
+    }
+
+    private FirstTestTower thingMaybe(String moi) {
+//        FirstTestTower builder = null;
+        int size = 40;
+        int attackTime = -1;
+        int attackDamage = -1;
+        int range = -1;
+        int collectedAttack = -1;
+        Color outside = Color.OLIVE;
+        Color inside = Color.INDIGO;
+        switch (moi) {
+            case "Beam":
+                attackTime = 65;
+                attackDamage = 5;
+                range = 200;
+                collectedAttack = 100;
+                inside = Color.BROWN;
+                break;
+            case "Sniper":
+                attackTime = 10;
+                attackDamage = 300;
+                range = 465;
+                collectedAttack = 1500;
+                inside = Color.ALICEBLUE;
+                break;
+            case "SniperBeam":
+                attackTime = 50;
+                attackDamage = 7;
+                range = 400;
+                collectedAttack = 110;
+                inside = Color.BROWN.interpolate(Color.ALICEBLUE, 0.5);
+                break;
+            case "Cannon":
+                attackTime = 1;
+                attackDamage = 700;
+                range = 160;
+                collectedAttack = 200;
+                inside = Color.DEEPPINK;
+                break;
+            case "Low":
+                attackTime = 10;
+                attackDamage = 15;
+                range = 150;
+                collectedAttack = 100;
+
+                inside = Color.CORNSILK;
+                break;
+            case "High":
+                attackTime = 5;
+                attackDamage = 55;
+                range = 175;
+                collectedAttack = 100;
+                inside = Color.AZURE;
+                break;
+
+            case "Basic":
+            default:
+                attackTime = 5;
+                attackDamage = 90;
+                range = 175;
+                collectedAttack = 150;
+                break;
+        }
+
+        return new FirstTestTower(size, outside, inside, range, attackDamage, attackTime, collectedAttack);
+    }
 }
