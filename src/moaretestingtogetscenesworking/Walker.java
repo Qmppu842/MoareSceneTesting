@@ -62,6 +62,7 @@ public class Walker implements Updatable, Comparable<Walker> {
         currentHP = this.maxHP;
         this.ROUTE = ROUTE;
         this.ID = id.hashCode();
+        scaleInitor();
     }
 
     public int getID() {
@@ -70,7 +71,9 @@ public class Walker implements Updatable, Comparable<Walker> {
 
     @Override
     public void update(GraphicsContext gc) {
-
+        if (speedScaleWithHP) {
+            scaleSpeedToCurrentHP();
+        }
         if (currPoint == null) {
             currPoint = new Point(ROUTE.get(0));
             nextIndex = 1;
@@ -162,7 +165,44 @@ public class Walker implements Updatable, Comparable<Walker> {
 
     @Override
     public int compareTo(Walker t) {
-
         return this.ID - t.ID;
     }
+
+    private boolean scaleSizeWithHp;
+    private boolean speedScaleWithHP;
+    private double speedOriginal;
+
+    private void scaleInitor() {
+        scaleSizeWithHp = false;
+        speedScaleWithHP = false;
+        speedOriginal = speed;
+    }
+
+    public void setScaleSizeWithHp(boolean scaleSizeWithHp) {
+        this.scaleSizeWithHp = scaleSizeWithHp;
+        if (scaleSizeWithHp) {
+            double scale = maxHP / 100;
+            size = (int) Math.min(150, (size * scale));
+        }
+    }
+
+    public void setSpeedScaleWithHP(boolean speedScaleWithHP) {
+        this.speedScaleWithHP = speedScaleWithHP;
+    }
+
+    private void scaleSpeedToCurrentHP() {
+        if (currentHP < maxHP * 0.15) {
+            speed = speedOriginal * 2;
+        } else if (currentHP < maxHP * 0.25) {
+            speed = speedOriginal * 1.5;
+        } else if (currentHP < maxHP * 0.5) {
+            speed = speedOriginal * 1.25;
+        } else if (currentHP < maxHP * 0.75) {
+            speed = speedOriginal * 1.1;
+        }
+    }
+
+//    private boolean isCurrHPLessThanProsMaxHP(){
+//    
+//    }
 }

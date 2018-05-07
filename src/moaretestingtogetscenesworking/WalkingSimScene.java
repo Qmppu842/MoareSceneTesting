@@ -169,8 +169,12 @@ public class WalkingSimScene extends BaseScene {
         EventHandler<ActionEvent> action = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                walkers.add(new Walker(1, null, -1, -1, ROUTE, "" + walkers.size()));
-
+                Walker walk = new Walker(1, null, -1, -1, ROUTE, "" + walkers.size());
+                walkers.add(walk);
+                Random ran = new Random();
+                if (ran.nextDouble() >0.8) {
+                    walk.setSpeedScaleWithHP(true);
+                }
 //                footer.getChildren().add(dealDamageToCertain(walkers.size() - 1));
             }
         };
@@ -236,7 +240,7 @@ public class WalkingSimScene extends BaseScene {
                 }
                 for (EmptyTowerPlace towerPlace : towerPlaces) {
                     if (towerPlace.isClicked != -1 && wannabeGold >= 25) {
-                        towers.add(new FirstTestTower(towerPlace.position, 40, Color.OLIVE, Color.INDIGO, 150, 5, 20));
+                        towers.add(new FirstTestTower(towerPlace.position, 40, Color.OLIVE, Color.INDIGO, 150, 1.3, 2));
                         toBeRemovedTowerPlaces.add(towerPlace);
                         wannabeGold -= 25;
                     } else if (towerPlace.isClicked != -1 && wannabeGold < 25) {

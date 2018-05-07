@@ -77,7 +77,7 @@ public abstract class BaseTower implements Updatable {
 
     private void midInit() {
         targetList2 = new TreeSet<>();
-        attackReadyLimit = 50;
+        attackReadyLimit = 5;
         attackTime2 = 1;
         collectedAttack = 0;
     }
