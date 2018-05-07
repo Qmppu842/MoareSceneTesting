@@ -52,6 +52,10 @@ public abstract class BaseTower implements Updatable {
         midInit();
     }
 
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+
     @Override
     public abstract void update(GraphicsContext gc);
 
