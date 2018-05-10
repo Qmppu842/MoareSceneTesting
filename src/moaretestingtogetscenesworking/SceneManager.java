@@ -9,19 +9,19 @@ import javafx.stage.Stage;
  * @author Qmppu842
  */
 public class SceneManager {
-
+    
     private Stage primeStage;
-    private Application app;
+//    private Application app;
     private StartScene startScene;
     private FastTableScene fastScene;
     private SlowTableScene slowScene;
     private NonTableScene nonScene;
     private LogicLoader logic;
     private WalkingSimScene walkingSimScene;
-
-    public SceneManager(Stage primeStage, Application app) {
+    
+    public SceneManager(Stage primeStage/*, Application app*/) {
         this.primeStage = primeStage;
-        this.app = app;
+//        this.app = app;
         this.primeStage.setMaximized(true);
         init();
     }
@@ -60,18 +60,19 @@ public class SceneManager {
                 primeStage.setFullScreen(true);
                 primeStage.setAlwaysOnTop(true);
                 break;
-
+            
         }
         
         this.primeStage.setMaximized(true);
-
+        
     }
-
+    
     public void startUp() {
-        primeStage.setScene(getStartScene());
+//        primeStage.setScene(getStartScene());
+        primeStage.setScene(getWalkingSimScene());
         primeStage.show();
     }
-
+    
     public void init() {
         logic = new LogicLoader();
         startScene = new StartScene(this);
@@ -80,23 +81,23 @@ public class SceneManager {
         nonScene = new NonTableScene(this, logic);
         walkingSimScene = new WalkingSimScene(this, logic);
     }
-
+    
     public Scene getStartScene() {
         return startScene.getScene();
     }
-
+    
     public Scene getFastTableScene() {
         return fastScene.getScene();
     }
-
+    
     public Scene getSlowTableScene() {
         return slowScene.getScene();
     }
-
+    
     public Scene getNonTableScene() {
         return nonScene.getScene();
     }
-
+    
     public Scene getWalkingSimScene() {
         return walkingSimScene.getScene();
     }

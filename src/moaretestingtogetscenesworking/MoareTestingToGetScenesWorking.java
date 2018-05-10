@@ -15,7 +15,7 @@ public class MoareTestingToGetScenesWorking extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Welcoming menu!");
 //        
-        manager = new SceneManager(primaryStage, this);
+        manager = new SceneManager(primaryStage/*, this*/);
         manager.startUp();
     }
 
